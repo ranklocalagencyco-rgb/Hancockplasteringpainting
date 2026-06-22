@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Cta from '../components/Cta.astro';
 import ServicesSnippet from '../components/ServicesSnippet.astro';
 import AreasSnippet from '../components/AreasSnippet.astro';
 import GallerySnippet from '../components/GallerySnippet.astro';
@@ -50,7 +51,7 @@ import BlogInsights from '../components/BlogInsights.astro';
           </div>
           <div style="display:flex;justify-content:space-between;gap:16px;border-bottom:1px solid #E2E8F0;padding-bottom:12px;">
             <span style="font-size:14px;color:#64748B;">Team size</span>
-            <span style="font-size:14px;font-weight:500;color:#0F172A;">4 plasterers</span>
+            <span style="font-size:14px;font-weight:500;color:#0F172A;">4 plasterers and painters</span>
           </div>
           <div style="display:flex;justify-content:space-between;gap:16px;border-bottom:1px solid #E2E8F0;padding-bottom:12px;">
             <span style="font-size:14px;color:#64748B;">Qualifications</span>
@@ -113,18 +114,7 @@ import BlogInsights from '../components/BlogInsights.astro';
   </div>
 </section>
 
-<!-- CTA -->
-<section style="padding:80px 24px;background:#0F172A;">
-  <div style="max-width:720px;margin:0 auto;text-align:center;">
-    <h2 style="font-family:'Lexend',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:700;color:#ffffff;margin:0 0 20px;letter-spacing:-0.04em;line-height:1.1;">Get your free quote today.</h2>
-    <p style="font-size:17px;color:rgba(255,255,255,0.65);margin:0 0 40px;line-height:1.65;">Fixed price agreed before work starts. No surprises.</p>
-    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
-      <a href="/contact" style="display:inline-flex;align-items:center;background:#0C7BA8;color:#ffffff;font-size:16px;font-weight:600;padding:15px 30px;border-radius:6px;text-decoration:none;">Get a Free Quote</a>
-      <a href="tel:07734903439" style="display:inline-flex;align-items:center;background:rgba(255,255,255,0.08);color:#ffffff;font-size:16px;font-weight:500;padding:15px 30px;border-radius:6px;text-decoration:none;border:1px solid rgba(255,255,255,0.18);">07734 903439</a>
-    </div>
-    <p style="font-size:13px;color:rgba(255,255,255,0.35);margin:32px 0 0;line-height:1.6;">Cancellations made less than 48 hours before your booking incur a £100 cancellation fee.</p>
-  </div>
-</section>
+<Cta />
 
 <ServicesSnippet />
 <AreasSnippet />

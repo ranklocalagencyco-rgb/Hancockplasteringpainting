@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import BlogInsights from '../components/BlogInsights.astro';
+import Cta from '../components/Cta.astro';
 import { readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -61,15 +62,10 @@ const images = files.map((f) => '/gallery/' + encodeURIComponent(f));
         ))}
       </div>
     )}
-
-    <div style="margin-top:64px;background:#0F172A;border-radius:12px;padding:48px 40px;text-align:center;">
-      <h2 style="font-family:'Lexend',sans-serif;font-size:clamp(24px,3vw,34px);font-weight:600;color:#ffffff;margin:0 0 12px;letter-spacing:-0.03em;">Like what you see?</h2>
-      <p style="font-size:16px;color:rgba(255,255,255,0.7);margin:0 0 28px;line-height:1.6;">Get a fixed-price quote for your plastering or painting project — no obligation.</p>
-      <a href="/contact" style="display:inline-flex;align-items:center;background:#0C7BA8;color:#ffffff;font-size:16px;font-weight:600;padding:15px 32px;border-radius:6px;text-decoration:none;letter-spacing:-0.02em;">Get a Free Quote</a>
-    </div>
   </div>
 </section>
 
+<Cta />
 <BlogInsights />
 
 <!-- LIGHTBOX -->

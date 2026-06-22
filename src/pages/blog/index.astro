@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import GallerySnippet from '../../components/GallerySnippet.astro';
+import Cta from '../../components/Cta.astro';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog')).sort(
@@ -54,5 +55,6 @@ const fmtDate = (d: Date) =>
   </div>
 </section>
 
+<Cta />
 <GallerySnippet />
 </Layout>
