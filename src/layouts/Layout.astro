@@ -96,14 +96,23 @@ for (const block of extraSchema) jsonld.push(block);
     </main>
     <Footer />
 
-    <!-- Generic hover handler: replicates Claude Design's style-hover attribute -->
+    <!-- Generic hover handler: replicates Claude Design's style-hover attribute.
+         Skipped on touch/non-hover devices (no hover) and deferred to idle so
+         it never blocks the main thread during load. -->
     <script is:inline>
-      document.querySelectorAll('[style-hover]').forEach((el) => {
-        const base = el.getAttribute('style') || '';
-        const hover = el.getAttribute('style-hover') || '';
-        el.addEventListener('mouseenter', () => el.setAttribute('style', base + ';' + hover));
-        el.addEventListener('mouseleave', () => el.setAttribute('style', base));
-      });
+      (function () {
+        if (!window.matchMedia || !window.matchMedia('(hover: hover)').matches) return;
+        function init() {
+          document.querySelectorAll('[style-hover]').forEach((el) => {
+            const base = el.getAttribute('style') || '';
+            const hover = el.getAttribute('style-hover') || '';
+            el.addEventListener('mouseenter', () => el.setAttribute('style', base + ';' + hover));
+            el.addEventListener('mouseleave', () => el.setAttribute('style', base));
+          });
+        }
+        if ('requestIdleCallback' in window) requestIdleCallback(init);
+        else setTimeout(init, 200);
+      })();
     </script>
   </body>
 </html>
