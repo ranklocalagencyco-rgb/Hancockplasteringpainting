@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import BlogInsights from '../components/BlogInsights.astro';
 import { readdirSync } from 'node:fs';
 import { join } from 'node:path';
 
@@ -68,6 +69,8 @@ const images = files.map((f) => '/gallery/' + encodeURIComponent(f));
     </div>
   </div>
 </section>
+
+<BlogInsights />
 
 <!-- LIGHTBOX -->
 <div id="lightbox" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(15,23,42,0.94);align-items:center;justify-content:center;">

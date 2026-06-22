@@ -1,5 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import ServicesSnippet from '../components/ServicesSnippet.astro';
+import AreasSnippet from '../components/AreasSnippet.astro';
+import GallerySnippet from '../components/GallerySnippet.astro';
+import BlogInsights from '../components/BlogInsights.astro';
 ---
 
 <Layout title='About Us | Hancock Plastering & Painting Services' description='Family-run plastering and painting firm based in Harefield, Middlesex. City & Guilds certified, all work done in-house — no subcontractors.' activePage='about'>
@@ -121,4 +125,9 @@ import Layout from '../layouts/Layout.astro';
     <p style="font-family:'Inter',sans-serif;font-size:13px;color:rgba(255,255,255,0.35);margin:32px 0 0;line-height:1.6;">Cancellations made less than 48 hours before your booking incur a £100 cancellation fee.</p>
   </div>
 </section>
+
+<ServicesSnippet />
+<AreasSnippet />
+<GallerySnippet />
+<BlogInsights />
 </Layout>
