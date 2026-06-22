@@ -28,8 +28,9 @@ const jsonld = schemaFor(Astro.url.pathname, title, description);
 const faqs = getFaqs(Astro.url.pathname);
 if (faqs) jsonld.push(faqSchema(faqs.items));
 
-// Service + area detail pages get extra gallery + blog sections to add depth.
-const isDetailPage = /^\/(services|areas)\/[a-z0-9-]+$/.test(path);
+// Service + area pages (hubs and detail pages) get extra gallery + blog
+// sections to add depth.
+const isDetailPage = /^\/(services|areas)(\/[a-z0-9-]+)?$/.test(path);
 
 // Page-supplied schema (e.g. BlogPosting on dynamic blog routes).
 for (const block of extraSchema) jsonld.push(block);
