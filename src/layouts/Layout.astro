@@ -119,11 +119,23 @@ for (const block of extraSchema) jsonld.push(block);
     src: url('/fonts/lexend-latin-wght-normal.woff2') format('woff2-variations');
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
   }
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
   body {
     margin: 0;
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+  /* Media never overflows its container on small screens */
+  img,
+  svg,
+  iframe,
+  video {
+    max-width: 100%;
   }
   /* Form controls don't inherit font-family by default */
   input,
@@ -131,5 +143,29 @@ for (const block of extraSchema) jsonld.push(block);
   textarea,
   button {
     font-family: inherit;
+  }
+
+  /* ------------------------------------------------------------------
+     Responsive layer.
+     Pages use inline styles, which can't hold media queries, so we
+     collapse the fixed-column grids here via attribute selectors. This
+     keeps every page responsive from one place. Substrings must match
+     the inline `grid-template-columns` values exactly.
+     ------------------------------------------------------------------ */
+  @media (max-width: 768px) {
+    /* 4-up stats bar -> 2x2 */
+    [style*="grid-template-columns:repeat(4,1fr)"] {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+  }
+  @media (max-width: 600px) {
+    /* 3-up image grids -> 2-up */
+    [style*="grid-template-columns:repeat(3,1fr)"] {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+    /* paired columns (form fields, before/after images) -> single column */
+    [style*="grid-template-columns:1fr 1fr"] {
+      grid-template-columns: 1fr !important;
+    }
   }
 </style>
