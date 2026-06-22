@@ -21,9 +21,9 @@ const fmtDate = (d: Date) =>
   <div style="position:absolute;top:0;left:0;right:0;bottom:0;background-image:url('/uploads/Hancock-plastering-and-painting%20(9).webp');background-size:cover;background-position:center 40%;"></div>
   <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to top,rgba(15,23,42,0.92) 0%,rgba(15,23,42,0.5) 55%,rgba(15,23,42,0.18) 100%);"></div>
   <div style="position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 24px 48px;width:100%;box-sizing:border-box;">
-    <p style="font-family:'Inter',sans-serif;font-size:12px;color:rgba(255,255,255,0.55);margin:0 0 12px;"><a href="/" style="color:rgba(255,255,255,0.55);text-decoration:none;">Home</a> / Blog</p>
+    <p style="font-size:12px;color:rgba(255,255,255,0.55);margin:0 0 12px;"><a href="/" style="color:rgba(255,255,255,0.55);text-decoration:none;">Home</a> / Blog</p>
     <h1 style="font-family:'Lexend',sans-serif;font-size:clamp(32px,5vw,54px);font-weight:700;color:#ffffff;margin:0 0 12px;letter-spacing:-0.04em;line-height:1.05;">Advice &amp; insights.</h1>
-    <p style="font-family:'Inter',sans-serif;font-size:17px;color:rgba(255,255,255,0.72);margin:0;">Honest, practical guidance on plastering, rendering and painting.</p>
+    <p style="font-size:17px;color:rgba(255,255,255,0.72);margin:0;">Honest, practical guidance on plastering, rendering and painting.</p>
   </div>
 </section>
 
@@ -31,7 +31,7 @@ const fmtDate = (d: Date) =>
 <section style="padding:72px 24px 96px;background:#F8FAFC;">
   <div style="max-width:1280px;margin:0 auto;">
     {posts.length === 0 ? (
-      <p style="font-family:'Inter',sans-serif;font-size:16px;color:#64748B;text-align:center;padding:40px 0;">New articles are on the way — check back soon.</p>
+      <p style="font-size:16px;color:#64748B;text-align:center;padding:40px 0;">New articles are on the way — check back soon.</p>
     ) : (
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;">
         {posts.map((post) => (
@@ -42,10 +42,10 @@ const fmtDate = (d: Date) =>
               </div>
             )}
             <div style="padding:24px;display:flex;flex-direction:column;flex:1;">
-              <p style="font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#0C7BA8;letter-spacing:0.06em;text-transform:uppercase;margin:0 0 10px;">{fmtDate(post.data.pubDate)}</p>
+              <p style="font-size:12px;font-weight:600;color:#0C7BA8;letter-spacing:0.06em;text-transform:uppercase;margin:0 0 10px;">{fmtDate(post.data.pubDate)}</p>
               <h2 style="font-family:'Lexend',sans-serif;font-size:20px;font-weight:600;color:#0F172A;margin:0 0 10px;letter-spacing:-0.02em;line-height:1.25;">{post.data.title}</h2>
-              <p style="font-family:'Inter',sans-serif;font-size:14px;color:#64748B;line-height:1.65;margin:0 0 18px;flex:1;">{post.data.description}</p>
-              <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#0C7BA8;">Read article →</span>
+              <p style="font-size:14px;color:#64748B;line-height:1.65;margin:0 0 18px;flex:1;">{post.data.description}</p>
+              <span style="font-size:14px;font-weight:500;color:#0C7BA8;">Read article →</span>
             </div>
           </a>
         ))}

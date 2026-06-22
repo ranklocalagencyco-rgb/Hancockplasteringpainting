@@ -7,14 +7,14 @@ const items = Object.entries(SERVICES);
   <div style="max-width:1280px;margin:0 auto;">
     <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:28px;">
       <div>
-        <p style="font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#0C7BA8;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 12px;">What we do</p>
+        <p style="font-size:12px;font-weight:600;color:#0C7BA8;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 12px;">What we do</p>
         <h2 style="font-family:'Lexend',sans-serif;font-size:clamp(24px,3.5vw,36px);font-weight:600;color:#0F172A;margin:0;letter-spacing:-0.03em;line-height:1.15;">Our services</h2>
       </div>
-      <a href="/services" style="font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#0C7BA8;text-decoration:none;white-space:nowrap;">View all services →</a>
+      <a href="/services" style="font-size:14px;font-weight:500;color:#0C7BA8;text-decoration:none;white-space:nowrap;">View all services →</a>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:8px;">
       {items.map(([slug, name]) => (
-        <a href={`/services/${slug}`} style="display:inline-block;padding:8px 16px;background:#ffffff;border:1px solid #E2E8F0;border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#0C7BA8;color:#0C7BA8;">{name}</a>
+        <a href={`/services/${slug}`} style="display:inline-block;padding:8px 16px;background:#ffffff;border:1px solid #E2E8F0;border-radius:6px;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#0C7BA8;color:#0C7BA8;">{name}</a>
       ))}
     </div>
   </div>
