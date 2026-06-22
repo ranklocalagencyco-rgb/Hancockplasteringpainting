@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(NODE_OPTIONS=--use-system-ca npx astro sync)",
+      "Bash(node -e 'fetch\\(\"http://localhost:4322/blog\"\\).then\\(r=>r.text\\(\\)\\).then\\(t=>console.log\\(\"Read article count:\", \\(t.match\\(/Read article/g\\)||[]\\).length\\)\\).catch\\(e=>console.log\\(\"ERR\",e.message\\)\\)')",
+      "Bash(xargs echo \"service URL in schema:\")",
+      "Bash(NODE_OPTIONS=--use-system-ca npm install @astrojs/sitemap)",
+      "Bash(xargs echo \"URLs:\")",
+      "Bash(xargs echo \"old horizontal nav rows \\(should be 0\\):\")"
+    ]
+  }
+}

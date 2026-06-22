@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hancockplasteringpainting.co.uk/sitemap-index.xml

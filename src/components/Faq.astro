@@ -1,0 +1,35 @@
+---
+import type { QA } from '../lib/faqs';
+export interface Props {
+  items: QA[];
+  heading?: string;
+}
+const { items, heading = 'Frequently asked questions' } = Astro.props;
+---
+
+<section style="background:#F8FAFC;border-top:1px solid #E2E8F0;padding:80px 24px;">
+  <div style="max-width:820px;margin:0 auto;">
+    <p style="font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#11ADE2;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 12px;">FAQs</p>
+    <h2 style="font-family:'Lexend',sans-serif;font-size:clamp(26px,4vw,38px);font-weight:600;color:#0F172A;margin:0 0 8px;letter-spacing:-0.03em;line-height:1.15;">{heading}</h2>
+    <p style="font-family:'Inter',sans-serif;font-size:16px;color:#64748B;margin:0 0 40px;line-height:1.6;">Straight answers about our plastering and painting work across Middlesex and the Home Counties. Still unsure? Call <a href="tel:07734903439" style="color:#11ADE2;text-decoration:none;font-weight:500;">07734&nbsp;903439</a>.</p>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      {items.map((it) => (
+        <details class="faq-item" style="background:#ffffff;border:1px solid #E2E8F0;border-radius:8px;">
+          <summary class="faq-summary" style="cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 24px;font-family:'Lexend',sans-serif;font-size:17px;font-weight:500;color:#0F172A;letter-spacing:-0.02em;line-height:1.4;">
+            <span>{it.q}</span>
+            <span class="faq-icon" style="flex-shrink:0;width:22px;height:22px;display:flex;align-items:center;justify-content:center;color:#11ADE2;transition:transform 0.2s ease;">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><line x1="8" y1="2" x2="8" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"></line><line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="2" stroke-linecap="round"></line></svg>
+            </span>
+          </summary>
+          <div style="padding:0 24px 22px;font-family:'Inter',sans-serif;font-size:15px;color:#475569;line-height:1.7;">{it.a}</div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-summary::-webkit-details-marker { display: none; }
+  .faq-summary { list-style: none; }
+  details[open] .faq-icon { transform: rotate(45deg); }
+</style>

@@ -1,11 +1,302 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const latestPosts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
 
-<Layout>
-	<Welcome />
+<Layout title='Plastering & Painting in Middlesex & the Home Counties | Hancock Plastering & Painting Services' description='Plastering and painting contractors serving Middlesex and the Home Counties. Fixed-price quotes. City & Guilds certified. No subcontractors.' activePage='home'>
+<!-- HERO -->
+<section style="position:relative;height:100vh;min-height:620px;display:flex;align-items:flex-end;">
+  <div style="position:absolute;top:0;left:0;right:0;bottom:0;background-image:url('/uploads/Hancock-plastering-and-painting%20(12).webp');background-size:cover;background-position:center 35%;"></div>
+  <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to top,rgba(15,23,42,0.92) 0%,rgba(15,23,42,0.55) 40%,rgba(15,23,42,0.18) 100%);"></div>
+  <div style="position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 24px 88px;width:100%;box-sizing:border-box;">
+    <p style="font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#11ADE2;letter-spacing:0.14em;text-transform:uppercase;margin:0 0 20px;">Middlesex &amp; The Home Counties</p>
+    <h1 style="font-family:'Lexend',sans-serif;font-size:clamp(48px,7vw,86px);font-weight:700;color:#ffffff;line-height:1.04;margin:0 0 28px;max-width:700px;letter-spacing:-0.04em;">Done properly.<br>Done once.</h1>
+    <p style="font-family:'Inter',sans-serif;font-size:clamp(16px,2vw,20px);font-weight:400;color:rgba(255,255,255,0.78);line-height:1.65;margin:0 0 44px;max-width:500px;">Plastering and painting contractors serving Middlesex and the Home Counties. Fixed-price quotes. City &amp; Guilds certified. No subcontractors.</p>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;">
+      <a href="/contact" style="display:inline-flex;align-items:center;background:#11ADE2;color:#ffffff;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;padding:16px 32px;border-radius:6px;text-decoration:none;letter-spacing:-0.02em;">Get a Free Quote</a>
+      <a href="/services" style="display:inline-flex;align-items:center;background:rgba(255,255,255,0.09);color:#ffffff;font-family:'Inter',sans-serif;font-size:16px;font-weight:500;padding:16px 32px;border-radius:6px;text-decoration:none;border:1px solid rgba(255,255,255,0.22);letter-spacing:-0.02em;">View Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<section style="background:#ffffff;border-bottom:1px solid #E2E8F0;">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;display:flex;flex-wrap:wrap;">
+    <div style="flex:1;min-width:190px;display:flex;align-items:center;gap:12px;padding:20px 24px 20px 0;border-right:1px solid #E2E8F0;">
+      <div style="flex-shrink:0;width:34px;height:34px;background:#E0FAFF;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8L6.5 11.5L13 4.5" stroke="#11ADE2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </div>
+      <div>
+        <p style="font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#0F172A;margin:0;letter-spacing:-0.01em;">City &amp; Guilds Certified</p>
+        <p style="font-family:'Inter',sans-serif;font-size:12px;color:#64748B;margin:2px 0 0;">All 4 team members qualified</p>
+      </div>
+    </div>
+    <div style="flex:1;min-width:190px;display:flex;align-items:center;gap:12px;padding:20px 24px;border-right:1px solid #E2E8F0;">
+      <div style="flex-shrink:0;width:34px;height:34px;background:#E0FAFF;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8L6.5 11.5L13 4.5" stroke="#11ADE2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </div>
+      <div>
+        <p style="font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#0F172A;margin:0;letter-spacing:-0.01em;">Fixed-Price Quotes</p>
+        <p style="font-family:'Inter',sans-serif;font-size:12px;color:#64748B;margin:2px 0 0;">Agreed before work starts</p>
+      </div>
+    </div>
+    <div style="flex:1;min-width:190px;display:flex;align-items:center;gap:12px;padding:20px 24px;border-right:1px solid #E2E8F0;">
+      <div style="flex-shrink:0;width:34px;height:34px;background:#E0FAFF;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8L6.5 11.5L13 4.5" stroke="#11ADE2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </div>
+      <div>
+        <p style="font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#0F172A;margin:0;letter-spacing:-0.01em;">All In-House</p>
+        <p style="font-family:'Inter',sans-serif;font-size:12px;color:#64748B;margin:2px 0 0;">No subcontractors, ever</p>
+      </div>
+    </div>
+    <div style="flex:1;min-width:190px;display:flex;align-items:center;justify-content:center;padding:14px 24px;">
+      <a href="https://www.checkatrade.com/trades/HancockPlasteringandPaintingServices" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:12px;text-decoration:none;border:2px solid #00A651;border-radius:8px;padding:10px 18px;background:#F0FDF4;">
+        <div style="width:38px;height:38px;background:#00A651;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3.5 9L7.5 13L14.5 5" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        </div>
+        <div>
+          <p style="font-family:'Inter',sans-serif;font-size:11px;font-weight:700;color:#00A651;text-transform:uppercase;letter-spacing:0.08em;margin:0;">Checkatrade</p>
+          <p style="font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#0F172A;margin:2px 0 0;">20+ verified reviews</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section style="padding:96px 24px;background:#F8FAFC;">
+  <div style="max-width:1280px;margin:0 auto;">
+    <p style="font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#11ADE2;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 12px;">What we do</p>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:48px;">
+      <h2 style="font-family:'Lexend',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:600;color:#0F172A;margin:0;letter-spacing:-0.03em;max-width:520px;line-height:1.15;">Plastering and painting done properly.</h2>
+      <a href="/services" style="font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#11ADE2;text-decoration:none;white-space:nowrap;">View all 14 services →</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;">
+      <a href="/services/rendering" style="display:block;background:#ffffff;border:1px solid #E2E8F0;border-radius:8px;padding:28px;text-decoration:none;" style-hover="box-shadow:0 4px 20px rgba(0,0,0,0.07);border-color:#D0E7F5;">
+        <div style="width:40px;height:40px;background:#E0FAFF;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="16" height="12" rx="1" stroke="#0F172A" stroke-width="1.5"></rect><line x1="2" y1="9" x2="18" y2="9" stroke="#0F172A" stroke-width="1"></line><line x1="9" y1="4" x2="9" y2="9" stroke="#0F172A" stroke-width="1"></line><line x1="6" y1="9" x2="6" y2="16" stroke="#0F172A" stroke-width="1"></line><line x1="13" y1="9" x2="13" y2="16" stroke="#0F172A" stroke-width="1"></line></svg>
+        </div>
+        <h3 style="font-family:'Lexend',sans-serif;font-size:18px;font-weight:600;color:#0F172A;margin:0 0 10px;letter-spacing:-0.02em;">Rendering</h3>
+        <p style="font-family:'Inter',sans-serif;font-size:14px;color:#64748B;line-height:1.65;margin:0 0 18px;">External render for Middlesex homes — sand and cement, monocouche, and pebble dash applied properly.</p>
+        <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#11ADE2;">Learn more →</span>
+      </a>
+      <a href="/services/plastering" style="display:block;background:#ffffff;border:1px solid #E2E8F0;border-radius:8px;padding:28px;text-decoration:none;" style-hover="box-shadow:0 4px 20px rgba(0,0,0,0.07);border-color:#D0E7F5;">
+        <div style="width:40px;height:40px;background:#E0FAFF;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="5" width="12" height="8" rx="1" stroke="#0F172A" stroke-width="1.5"></rect><line x1="14" y1="9" x2="18" y2="13" stroke="#0F172A" stroke-width="2" stroke-linecap="round"></line></svg>
+        </div>
+        <h3 style="font-family:'Lexend',sans-serif;font-size:18px;font-weight:600;color:#0F172A;margin:0 0 10px;letter-spacing:-0.02em;">Plastering &amp; Skimming</h3>
+        <p style="font-family:'Inter',sans-serif;font-size:14px;color:#64748B;line-height:1.65;margin:0 0 18px;">From scratch coats to final skims — walls prepared and finished flat, ready for paint or paper.</p>
+        <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#11ADE2;">Learn more →</span>
+      </a>
+      <a href="/services/venetian-plastering" style="display:block;background:#ffffff;border:1px solid #E2E8F0;border-radius:8px;padding:28px;text-decoration:none;" style-hover="box-shadow:0 4px 20px rgba(0,0,0,0.07);border-color:#D0E7F5;">
+        <div style="width:40px;height:40px;background:#E0FAFF;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L11.8 7.5H17.5L12.9 10.8L14.6 16.5L10 13.2L5.4 16.5L7.1 10.8L2.5 7.5H8.2L10 2Z" stroke="#0F172A" stroke-width="1.5" stroke-linejoin="round"></path></svg>
+        </div>
+        <h3 style="font-family:'Lexend',sans-serif;font-size:18px;font-weight:600;color:#0F172A;margin:0 0 10px;letter-spacing:-0.02em;">Venetian Plastering</h3>
+        <p style="font-family:'Inter',sans-serif;font-size:14px;color:#64748B;line-height:1.65;margin:0 0 18px;">Polished plaster for high-end interiors across Windsor, Gerrards Cross, and Ascot.</p>
+        <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#11ADE2;">Learn more →</span>
+      </a>
+      <a href="/services/interior-painting" style="display:block;background:#ffffff;border:1px solid #E2E8F0;border-radius:8px;padding:28px;text-decoration:none;" style-hover="box-shadow:0 4px 20px rgba(0,0,0,0.07);border-color:#D0E7F5;">
+        <div style="width:40px;height:40px;background:#E0FAFF;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="14" height="6" rx="1" stroke="#0F172A" stroke-width="1.5"></rect><line x1="9" y1="8" x2="9" y2="13" stroke="#0F172A" stroke-width="1.5"></line><line x1="9" y1="13" x2="14" y2="13" stroke="#0F172A" stroke-width="1.5" stroke-linecap="round"></line><line x1="14" y1="13" x2="14" y2="18" stroke="#0F172A" stroke-width="1.5" stroke-linecap="round"></line></svg>
+        </div>
+        <h3 style="font-family:'Lexend',sans-serif;font-size:18px;font-weight:600;color:#0F172A;margin:0 0 10px;letter-spacing:-0.02em;">Interior Painting</h3>
+        <p style="font-family:'Inter',sans-serif;font-size:14px;color:#64748B;line-height:1.65;margin:0 0 18px;">Clean, even, properly prepared. Interior painting done without the mess or shortcuts.</p>
+        <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#11ADE2;">Learn more →</span>
+      </a>
+      <a href="/services/exterior-painting" style="display:block;background:#ffffff;border:1px solid #E2E8F0;border-radius:8px;padding:28px;text-decoration:none;" style-hover="box-shadow:0 4px 20px rgba(0,0,0,0.07);border-color:#D0E7F5;">
+        <div style="width:40px;height:40px;background:#E0FAFF;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2 9L10 2L18 9" stroke="#0F172A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4 8V18H16V8" stroke="#0F172A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><rect x="8" y="12" width="4" height="6" stroke="#0F172A" stroke-width="1.5"></rect></svg>
+        </div>
+        <h3 style="font-family:'Lexend',sans-serif;font-size:18px;font-weight:600;color:#0F172A;margin:0 0 10px;letter-spacing:-0.02em;">Exterior Painting</h3>
+        <p style="font-family:'Inter',sans-serif;font-size:14px;color:#64748B;line-height:1.65;margin:0 0 18px;">Weather-resistant finishes that protect the fabric of your property and hold up over the years.</p>
+        <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#11ADE2;">Learn more →</span>
+      </a>
+      <a href="/services/sash-window-painting" style="display:block;background:#ffffff;border:1px solid #E2E8F0;border-radius:8px;padding:28px;text-decoration:none;" style-hover="box-shadow:0 4px 20px rgba(0,0,0,0.07);border-color:#D0E7F5;">
+        <div style="width:40px;height:40px;background:#E0FAFF;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="2" width="14" height="16" rx="1" stroke="#0F172A" stroke-width="1.5"></rect><line x1="10" y1="2" x2="10" y2="18" stroke="#0F172A" stroke-width="1.5"></line><line x1="3" y1="10" x2="17" y2="10" stroke="#0F172A" stroke-width="1.5"></line></svg>
+        </div>
+        <h3 style="font-family:'Lexend',sans-serif;font-size:18px;font-weight:600;color:#0F172A;margin:0 0 10px;letter-spacing:-0.02em;">Sash Window Painting</h3>
+        <p style="font-family:'Inter',sans-serif;font-size:14px;color:#64748B;line-height:1.65;margin:0 0 18px;">The finish period properties demand, done with the prep that makes it last beyond one winter.</p>
+        <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#11ADE2;">Learn more →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<section style="background:#11ADE2;padding:52px 24px;">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:0;">
+    <div style="text-align:center;padding:0 24px;border-right:1px solid rgba(255,255,255,0.25);">
+      <p style="font-family:'Lexend',sans-serif;font-size:clamp(40px,5vw,64px);font-weight:800;color:#ffffff;margin:0;letter-spacing:-0.04em;line-height:1;">60+</p>
+      <p style="font-family:'Inter',sans-serif;font-size:14px;color:rgba(255,255,255,0.82);margin:8px 0 0;line-height:1.4;">Years of combined<br>experience</p>
+    </div>
+    <div style="text-align:center;padding:0 24px;border-right:1px solid rgba(255,255,255,0.25);">
+      <p style="font-family:'Lexend',sans-serif;font-size:clamp(40px,5vw,64px);font-weight:800;color:#ffffff;margin:0;letter-spacing:-0.04em;line-height:1;">4</p>
+      <p style="font-family:'Inter',sans-serif;font-size:14px;color:rgba(255,255,255,0.82);margin:8px 0 0;line-height:1.4;">City &amp; Guilds certified<br>plasterers</p>
+    </div>
+    <div style="text-align:center;padding:0 24px;border-right:1px solid rgba(255,255,255,0.25);">
+      <p style="font-family:'Lexend',sans-serif;font-size:clamp(40px,5vw,64px);font-weight:800;color:#ffffff;margin:0;letter-spacing:-0.04em;line-height:1;">14</p>
+      <p style="font-family:'Inter',sans-serif;font-size:14px;color:rgba(255,255,255,0.82);margin:8px 0 0;line-height:1.4;">Services across plastering<br>&amp; painting</p>
+    </div>
+    <div style="text-align:center;padding:0 24px;">
+      <p style="font-family:'Lexend',sans-serif;font-size:clamp(40px,5vw,64px);font-weight:800;color:#ffffff;margin:0;letter-spacing:-0.04em;line-height:1;">26</p>
+      <p style="font-family:'Inter',sans-serif;font-size:14px;color:rgba(255,255,255,0.82);margin:8px 0 0;line-height:1.4;">Areas across Middlesex<br>&amp; Home Counties</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section style="padding:96px 24px;background:#ffffff;">
+  <div style="max-width:1280px;margin:0 auto;">
+    <p style="font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#11ADE2;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 12px;">Our work</p>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:40px;">
+      <h2 style="font-family:'Lexend',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:600;color:#0F172A;margin:0;letter-spacing:-0.03em;line-height:1.15;">A sample of the finish.</h2>
+      <a href="/gallery" style="font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#11ADE2;text-decoration:none;white-space:nowrap;">View full gallery →</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div style="aspect-ratio:4/3;overflow:hidden;border-radius:4px;">
+        <img src="/uploads/Hancock-plastering-and-painting%20(1).webp" alt="Immaculate white interior with exposed dark roof trusses — plastering by Hancock" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" style-hover="transform:scale(1.04);" loading="lazy">
+      </div>
+      <div style="aspect-ratio:4/3;overflow:hidden;border-radius:4px;">
+        <img src="/uploads/Hancock-plastering-and-painting%20(5).webp" alt="Ornate white plaster cornice and ceiling detail — Hancock plaster refurbishment" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" style-hover="transform:scale(1.04);" loading="lazy">
+      </div>
+      <div style="aspect-ratio:4/3;overflow:hidden;border-radius:4px;">
+        <img src="/uploads/Hancock-plastering-and-painting%20(4).webp" alt="Metallic Venetian plaster wall finish with built-in shelf lighting" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" style-hover="transform:scale(1.04);" loading="lazy">
+      </div>
+      <div style="aspect-ratio:4/3;overflow:hidden;border-radius:4px;">
+        <img src="/uploads/Hancock-plastering-and-painting%20(13).webp" alt="Hancock plasterer in branded polo shirt applying skim plaster to a wall" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" style-hover="transform:scale(1.04);" loading="lazy">
+      </div>
+      <div style="aspect-ratio:4/3;overflow:hidden;border-radius:4px;">
+        <img src="/uploads/Hancock-plastering-and-painting%20(9).webp" alt="Careful sash window painting on a period property — detail of brush on frame" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" style-hover="transform:scale(1.04);" loading="lazy">
+      </div>
+      <div style="aspect-ratio:4/3;overflow:hidden;border-radius:4px;">
+        <img src="/uploads/Hancock-plastering-and-painting%20(14).webp" alt="Applying scratch coat render to an external wall — Hancock rendering service" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" style-hover="transform:scale(1.04);" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY HANCOCK -->
+<section style="padding:96px 24px;background:#F8FAFC;border-top:1px solid #E2E8F0;">
+  <div style="max-width:1280px;margin:0 auto;">
+    <div style="display:flex;gap:64px;align-items:center;flex-wrap:wrap;">
+      <div style="flex:1;min-width:300px;">
+        <p style="font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#11ADE2;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 12px;">Why Hancock?</p>
+        <h2 style="font-family:'Lexend',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:600;color:#0F172A;margin:0 0 48px;letter-spacing:-0.03em;line-height:1.15;">Because once is enough<br>if it's done properly.</h2>
+        <div style="display:flex;flex-direction:column;gap:32px;">
+          <div style="padding-left:20px;border-left:3px solid #11ADE2;">
+            <p style="font-family:'Inter',sans-serif;font-size:11px;font-weight:700;color:#11ADE2;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 8px;">01</p>
+            <h3 style="font-family:'Lexend',sans-serif;font-size:18px;font-weight:600;color:#0F172A;margin:0 0 8px;letter-spacing:-0.02em;">A price agreed upfront, not amended afterward.</h3>
+            <p style="font-family:'Inter',sans-serif;font-size:15px;color:#334155;line-height:1.65;margin:0;">Price confirmed before work starts. No revision letters. No invoice surprises when the job is done.</p>
+          </div>
+          <div style="padding-left:20px;border-left:3px solid #11ADE2;">
+            <p style="font-family:'Inter',sans-serif;font-size:11px;font-weight:700;color:#11ADE2;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 8px;">02</p>
+            <h3 style="font-family:'Lexend',sans-serif;font-size:18px;font-weight:600;color:#0F172A;margin:0 0 8px;letter-spacing:-0.02em;">Four plasterers. Sixty years between them.</h3>
+            <p style="font-family:'Inter',sans-serif;font-size:15px;color:#334155;line-height:1.65;margin:0;">Every person on the team holds City &amp; Guilds certification. Victorian terrace plaster, new-build skims, high-end Venetian finishing — they've done it all.</p>
+          </div>
+          <div style="padding-left:20px;border-left:3px solid #11ADE2;">
+            <p style="font-family:'Inter',sans-serif;font-size:11px;font-weight:700;color:#11ADE2;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 8px;">03</p>
+            <h3 style="font-family:'Lexend',sans-serif;font-size:18px;font-weight:600;color:#0F172A;margin:0 0 8px;letter-spacing:-0.02em;">It's us on your property. No one else.</h3>
+            <p style="font-family:'Inter',sans-serif;font-size:15px;color:#334155;line-height:1.65;margin:0;">We don't subcontract. The same team that quotes your job starts it and finishes it. What you're told on day one is what you get on day last.</p>
+          </div>
+        </div>
+        <a href="/about" style="display:inline-flex;align-items:center;margin-top:40px;font-family:'Inter',sans-serif;font-size:15px;font-weight:600;color:#0F172A;text-decoration:none;gap:6px;">Meet the team <span style="color:#11ADE2;">→</span></a>
+      </div>
+      <div style="width:420px;flex-shrink:0;max-width:100%;aspect-ratio:3/4;overflow:hidden;border-radius:4px;">
+        <img src="/uploads/Hancock-plastering-and-painting%20(13).webp" alt="Hancock plasterer in branded white polo shirt applying a skim coat finish" style="width:100%;height:100%;object-fit:cover;display:block;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AREAS -->
+<section style="padding:96px 24px;background:#ffffff;border-top:1px solid #E2E8F0;">
+  <div style="max-width:1280px;margin:0 auto;">
+    <p style="font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#11ADE2;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 12px;">Service areas</p>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:40px;">
+      <h2 style="font-family:'Lexend',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:600;color:#0F172A;margin:0;letter-spacing:-0.03em;line-height:1.15;">Covering Middlesex and<br>the Home Counties.</h2>
+      <a href="/areas" style="font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#11ADE2;text-decoration:none;white-space:nowrap;">View all 26 areas →</a>
+    </div>
+    <p style="font-family:'Inter',sans-serif;font-size:16px;color:#64748B;line-height:1.6;margin:0 0 36px;max-width:580px;">From Stanmore and Watford in the north to Bracknell, Farnham, and Ascot in the south. Based in Harefield, UB9. 26 service areas.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;">
+      <a href="/areas/amersham" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Amersham</a>
+      <a href="/areas/ascot" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Ascot</a>
+      <a href="/areas/beaconsfield" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Beaconsfield</a>
+      <a href="/areas/binfield" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Binfield</a>
+      <a href="/areas/bracknell" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Bracknell</a>
+      <a href="/areas/burnham" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Burnham</a>
+      <a href="/areas/chalfont" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Chalfont</a>
+      <a href="/areas/chesham" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Chesham</a>
+      <a href="/areas/chorleywood" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Chorleywood</a>
+      <a href="/areas/denham" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Denham</a>
+      <a href="/areas/eastcote" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Eastcote</a>
+      <a href="/areas/farnham" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Farnham</a>
+      <a href="/areas/gerrards-cross" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Gerrards Cross</a>
+      <a href="/areas/harefield" style="display:inline-block;padding:8px 16px;background:#E0FAFF;border:1px solid #11ADE2;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:#11ADE2;text-decoration:none;">Harefield ★</a>
+      <a href="/areas/hatch-end" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Hatch End</a>
+      <a href="/areas/ickenham" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Ickenham</a>
+      <a href="/areas/iver" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Iver</a>
+      <a href="/areas/northwood" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Northwood</a>
+      <a href="/areas/pinner" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Pinner</a>
+      <a href="/areas/rickmansworth" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Rickmansworth</a>
+      <a href="/areas/ruislip" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Ruislip</a>
+      <a href="/areas/stanmore" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Stanmore</a>
+      <a href="/areas/stoke-poges" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Stoke Poges</a>
+      <a href="/areas/uxbridge" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Uxbridge</a>
+      <a href="/areas/watford" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Watford</a>
+      <a href="/areas/windsor" style="display:inline-block;padding:8px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:4px;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#334155;text-decoration:none;" style-hover="background:#E0FAFF;border-color:#11ADE2;color:#11ADE2;">Windsor</a>
+    </div>
+  </div>
+</section>
+
+<!-- LATEST FROM THE BLOG -->
+{latestPosts.length > 0 && (
+  <section style="padding:96px 24px;background:#F8FAFC;border-top:1px solid #E2E8F0;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <p style="font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#11ADE2;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 12px;">Advice &amp; insights</p>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:40px;">
+        <h2 style="font-family:'Lexend',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:600;color:#0F172A;margin:0;letter-spacing:-0.03em;line-height:1.15;">Latest from the blog.</h2>
+        <a href="/blog" style="font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#11ADE2;text-decoration:none;white-space:nowrap;">View all articles →</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;">
+        {latestPosts.map((post) => (
+          <a href={`/blog/${post.id}`} style="display:flex;flex-direction:column;background:#ffffff;border:1px solid #E2E8F0;border-radius:10px;overflow:hidden;text-decoration:none;" style-hover="box-shadow:0 8px 28px rgba(0,0,0,0.08);border-color:#D0E7F5;">
+            {post.data.heroImage && (
+              <div style="aspect-ratio:16/9;background:#F1F5F9;overflow:hidden;">
+                <img src={post.data.heroImage} alt={post.data.title} loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+              </div>
+            )}
+            <div style="padding:24px;display:flex;flex-direction:column;flex:1;">
+              <p style="font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#11ADE2;letter-spacing:0.06em;text-transform:uppercase;margin:0 0 10px;">{fmtDate(post.data.pubDate)}</p>
+              <h3 style="font-family:'Lexend',sans-serif;font-size:19px;font-weight:600;color:#0F172A;margin:0 0 10px;letter-spacing:-0.02em;line-height:1.25;">{post.data.title}</h3>
+              <p style="font-family:'Inter',sans-serif;font-size:14px;color:#64748B;line-height:1.65;margin:0 0 18px;flex:1;">{post.data.description}</p>
+              <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#11ADE2;">Read article →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<!-- CTA -->
+<section style="padding:96px 24px;background:#0F172A;">
+  <div style="max-width:760px;margin:0 auto;text-align:center;">
+    <h2 style="font-family:'Lexend',sans-serif;font-size:clamp(32px,4vw,52px);font-weight:700;color:#ffffff;margin:0 0 20px;letter-spacing:-0.04em;line-height:1.1;">Ready for a fixed-price quote?</h2>
+    <p style="font-family:'Inter',sans-serif;font-size:18px;color:rgba(255,255,255,0.65);line-height:1.65;margin:0 0 44px;max-width:480px;margin-left:auto;margin-right:auto;">No commitment, no sales pitch. Just an honest price for the job, confirmed before work starts.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a href="/contact" style="display:inline-flex;align-items:center;background:#11ADE2;color:#ffffff;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;padding:16px 32px;border-radius:6px;text-decoration:none;letter-spacing:-0.02em;">Get Your Free Quote</a>
+      <a href="tel:07734903439" style="display:inline-flex;align-items:center;background:rgba(255,255,255,0.08);color:#ffffff;font-family:'Inter',sans-serif;font-size:16px;font-weight:500;padding:16px 32px;border-radius:6px;text-decoration:none;border:1px solid rgba(255,255,255,0.18);letter-spacing:-0.02em;">Call 07734 903439</a>
+    </div>
+    <p style="font-family:'Inter',sans-serif;font-size:13px;color:rgba(255,255,255,0.35);margin:40px 0 0;line-height:1.6;">Please be aware: cancellations made less than 48 hours before your booking incur a £100 cancellation fee.</p>
+  </div>
+</section>
 </Layout>
