@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+{posts.length > 0 && (
+  <section style="padding:72px 24px;background:#ffffff;border-top:1px solid #E2E8F0;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:32px;">
+        <div>
+          <p style="font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#0C7BA8;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 12px;">Advice &amp; insights</p>
+          <h2 style="font-family:'Lexend',sans-serif;font-size:clamp(24px,3.5vw,36px);font-weight:600;color:#0F172A;margin:0;letter-spacing:-0.03em;line-height:1.15;">From the blog</h2>
+        </div>
+        <a href="/blog" style="font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#0C7BA8;text-decoration:none;white-space:nowrap;">View all articles →</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;">
+        {posts.map((post) => (
+          <a href={`/blog/${post.id}`} style="display:flex;flex-direction:column;background:#ffffff;border:1px solid #E2E8F0;border-radius:10px;overflow:hidden;text-decoration:none;" style-hover="box-shadow:0 8px 28px rgba(0,0,0,0.08);border-color:#D0E7F5;">
+            {post.data.heroImage && (
+              <div style="aspect-ratio:16/9;background:#F1F5F9;overflow:hidden;">
+                <img src={post.data.heroImage} alt={post.data.title} title={post.data.title} loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+              </div>
+            )}
+            <div style="padding:22px;display:flex;flex-direction:column;flex:1;">
+              <p style="font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#0C7BA8;letter-spacing:0.06em;text-transform:uppercase;margin:0 0 10px;">{fmtDate(post.data.pubDate)}</p>
+              <h3 style="font-family:'Lexend',sans-serif;font-size:18px;font-weight:600;color:#0F172A;margin:0 0 10px;letter-spacing:-0.02em;line-height:1.25;">{post.data.title}</h3>
+              <p style="font-family:'Inter',sans-serif;font-size:14px;color:#64748B;line-height:1.65;margin:0 0 16px;flex:1;">{post.data.description}</p>
+              <span style="font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#0C7BA8;">Read article →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

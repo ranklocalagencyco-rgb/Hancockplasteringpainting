@@ -16,14 +16,20 @@ const {
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Faq from '../components/Faq.astro';
+import GallerySnippet from '../components/GallerySnippet.astro';
+import BlogInsights from '../components/BlogInsights.astro';
 import { schemaFor, SITE_URL, BUSINESS } from '../lib/business';
 import { getFaqs, faqSchema } from '../lib/faqs';
 
-const canonical = SITE_URL + (Astro.url.pathname !== '/' ? Astro.url.pathname.replace(/\/$/, '') : '');
+const path = Astro.url.pathname !== '/' ? Astro.url.pathname.replace(/\/$/, '') : '/';
+const canonical = SITE_URL + (path === '/' ? '' : path);
 const jsonld = schemaFor(Astro.url.pathname, title, description);
 
 const faqs = getFaqs(Astro.url.pathname);
 if (faqs) jsonld.push(faqSchema(faqs.items));
+
+// Service + area detail pages get extra gallery + blog sections to add depth.
+const isDetailPage = /^\/(services|areas)\/[a-z0-9-]+$/.test(path);
 
 // Page-supplied schema (e.g. BlogPosting on dynamic blog routes).
 for (const block of extraSchema) jsonld.push(block);
@@ -48,7 +54,12 @@ for (const block of extraSchema) jsonld.push(block);
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={BUSINESS.logo} />
+
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={BUSINESS.logo} />
 
     <!-- JSON-LD structured data -->
     {jsonld.map((block) => (
@@ -63,8 +74,12 @@ for (const block of extraSchema) jsonld.push(block);
   </head>
   <body>
     <Nav activePage={activePage} />
-    <slot />
-    {faqs && <Faq heading={faqs.heading} items={faqs.items} />}
+    <main>
+      <slot />
+      {isDetailPage && <GallerySnippet />}
+      {isDetailPage && <BlogInsights />}
+      {faqs && <Faq heading={faqs.heading} items={faqs.items} />}
+    </main>
     <Footer />
 
     <!-- Generic hover handler: replicates Claude Design's style-hover attribute -->

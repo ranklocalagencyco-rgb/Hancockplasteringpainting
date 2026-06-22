@@ -1,0 +1,36 @@
+---
+import { readdirSync } from 'node:fs';
+import { join } from 'node:path';
+
+// First few gallery images as a teaser. Reads /public/gallery at build time.
+let files: string[] = [];
+try {
+  files = readdirSync(join(process.cwd(), 'public', 'gallery'))
+    .filter((f) => /\.(webp|jpe?g|png|avif)$/i.test(f))
+    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+} catch {
+  files = [];
+}
+const images = files.slice(0, 4).map((f) => '/gallery/' + encodeURIComponent(f));
+---
+
+{images.length > 0 && (
+  <section style="padding:72px 24px;background:#F8FAFC;border-top:1px solid #E2E8F0;">
+    <div style="max-width:1280px;margin:0 auto;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;margin-bottom:32px;">
+        <div>
+          <p style="font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:#0C7BA8;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 12px;">Our work</p>
+          <h2 style="font-family:'Lexend',sans-serif;font-size:clamp(24px,3.5vw,36px);font-weight:600;color:#0F172A;margin:0;letter-spacing:-0.03em;line-height:1.15;">Recent projects</h2>
+        </div>
+        <a href="/gallery" style="font-family:'Inter',sans-serif;font-size:14px;font-weight:500;color:#0C7BA8;text-decoration:none;white-space:nowrap;">View full gallery →</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;">
+        {images.map((src, i) => (
+          <a href="/gallery" style="display:block;aspect-ratio:4/3;overflow:hidden;border-radius:8px;background:#F1F5F9;">
+            <img src={src} alt={`Hancock plastering and painting — recent work ${i + 1}`} title={`Hancock plastering and painting — recent work ${i + 1}`} loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" style-hover="transform:scale(1.05);" />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

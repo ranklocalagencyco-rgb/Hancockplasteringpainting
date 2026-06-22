@@ -52,6 +52,7 @@ const images = files.map((f) => '/gallery/' + encodeURIComponent(f));
             <img
               src={src}
               alt={`Hancock plastering and painting — recent work ${i + 1}`}
+              title={`Hancock plastering and painting — recent work ${i + 1}`}
               loading="lazy"
               style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;"
             />
@@ -63,7 +64,7 @@ const images = files.map((f) => '/gallery/' + encodeURIComponent(f));
     <div style="margin-top:64px;background:#0F172A;border-radius:12px;padding:48px 40px;text-align:center;">
       <h2 style="font-family:'Lexend',sans-serif;font-size:clamp(24px,3vw,34px);font-weight:600;color:#ffffff;margin:0 0 12px;letter-spacing:-0.03em;">Like what you see?</h2>
       <p style="font-family:'Inter',sans-serif;font-size:16px;color:rgba(255,255,255,0.7);margin:0 0 28px;line-height:1.6;">Get a fixed-price quote for your plastering or painting project — no obligation.</p>
-      <a href="/contact" style="display:inline-flex;align-items:center;background:#11ADE2;color:#ffffff;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;padding:15px 32px;border-radius:6px;text-decoration:none;letter-spacing:-0.02em;">Get a Free Quote</a>
+      <a href="/contact" style="display:inline-flex;align-items:center;background:#0C7BA8;color:#ffffff;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;padding:15px 32px;border-radius:6px;text-decoration:none;letter-spacing:-0.02em;">Get a Free Quote</a>
     </div>
   </div>
 </section>
@@ -72,7 +73,7 @@ const images = files.map((f) => '/gallery/' + encodeURIComponent(f));
 <div id="lightbox" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(15,23,42,0.94);align-items:center;justify-content:center;">
   <button id="lb-close" aria-label="Close" style="position:absolute;top:20px;right:24px;background:none;border:none;color:#ffffff;font-size:34px;line-height:1;cursor:pointer;font-family:'Inter',sans-serif;">×</button>
   <button id="lb-prev" aria-label="Previous" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.1);border:none;color:#ffffff;font-size:28px;width:48px;height:48px;border-radius:50%;cursor:pointer;">‹</button>
-  <img id="lb-img" src="" alt="" style="max-width:90vw;max-height:85vh;object-fit:contain;border-radius:6px;box-shadow:0 10px 40px rgba(0,0,0,0.5);" />
+  <img id="lb-img" src="" alt="Hancock plastering and painting work — enlarged view" title="Hancock plastering and painting work — enlarged view" style="max-width:90vw;max-height:85vh;object-fit:contain;border-radius:6px;box-shadow:0 10px 40px rgba(0,0,0,0.5);" />
   <button id="lb-next" aria-label="Next" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.1);border:none;color:#ffffff;font-size:28px;width:48px;height:48px;border-radius:50%;cursor:pointer;">›</button>
 </div>
 
