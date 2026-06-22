@@ -6,7 +6,15 @@
       "Bash(xargs echo \"service URL in schema:\")",
       "Bash(NODE_OPTIONS=--use-system-ca npm install @astrojs/sitemap)",
       "Bash(xargs echo \"URLs:\")",
-      "Bash(xargs echo \"old horizontal nav rows \\(should be 0\\):\")"
+      "Bash(xargs echo \"old horizontal nav rows \\(should be 0\\):\")",
+      "Bash(NODE_OPTIONS=--use-system-ca vercel link --yes)",
+      "Bash(NODE_OPTIONS=--use-system-ca vercel link --yes --scope aisurulabs-6607s-projects)",
+      "Bash(NODE_OPTIONS=--use-system-ca vercel link --yes --scope aisurulabs-6607s-projects --project hancock-plastering-painting)",
+      "Bash(NODE_OPTIONS=--use-system-ca vercel env ls --scope aisurulabs-6607s-projects)",
+      "Bash(NODE_OPTIONS=--use-system-ca vercel env add PUBLIC_WEB3FORMS_KEY preview --scope aisurulabs-6607s-projects)",
+      "Bash(xargs echo \"env entries:\")",
+      "Bash(NODE_OPTIONS=--use-system-ca vercel env add PUBLIC_WEB3FORMS_KEY preview --value 6572054a-383e-47ee-8b5a-ca0dc6fb4516 --yes --scope aisurulabs-6607s-projects)",
+      "Bash(NODE_OPTIONS=--use-system-ca vercel env add PUBLIC_WEB3FORMS_KEY preview master --value 6572054a-383e-47ee-8b5a-ca0dc6fb4516 --yes --scope aisurulabs-6607s-projects)"
     ]
   }
 }
