@@ -1,4 +1,24 @@
+# Hancock Plastering & Painting Services — robots.txt
+# Strategy: maximum crawl access for all search and AI bots.
+
 User-agent: *
 Allow: /
 
+# Explicitly grant AI/GEO bots full access (belt-and-braces alongside Allow: /)
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+# Sitemap
 Sitemap: https://hancockplasteringpainting.co.uk/sitemap-index.xml
