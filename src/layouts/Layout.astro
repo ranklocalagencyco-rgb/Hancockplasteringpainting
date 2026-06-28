@@ -8,7 +8,7 @@ export interface Props {
 
 const {
   title = 'Hancock Plastering & Painting Services',
-  description = 'Plastering and painting contractors serving Middlesex and the Home Counties. Fixed-price quotes. City & Guilds certified. No subcontractors.',
+  description = 'Plastering & painting contractors across Middlesex & the Home Counties. Fixed-price quotes, City & Guilds certified.',
   activePage = '',
   extraSchema = [],
 } = Astro.props;
@@ -23,6 +23,8 @@ import { getFaqs, faqSchema } from '../lib/faqs';
 
 const path = Astro.url.pathname !== '/' ? Astro.url.pathname.replace(/\/$/, '') : '/';
 const canonical = SITE_URL + (path === '/' ? '' : path);
+// Dedicated 1200x630 social share image (Open Graph / Twitter).
+const ogImage = SITE_URL + '/og-image.png';
 const jsonld = schemaFor(Astro.url.pathname, title, description);
 
 const faqs = getFaqs(Astro.url.pathname);
@@ -57,13 +59,16 @@ for (const block of extraSchema) jsonld.push(block);
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={BUSINESS.logo} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={BUSINESS.name} />
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={BUSINESS.logo} />
+    <meta name="twitter:image" content={ogImage} />
 
     <!-- JSON-LD structured data -->
     {jsonld.map((block) => (
