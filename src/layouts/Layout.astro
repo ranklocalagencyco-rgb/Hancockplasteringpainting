@@ -18,6 +18,7 @@ import Footer from '../components/Footer.astro';
 import Faq from '../components/Faq.astro';
 import GallerySnippet from '../components/GallerySnippet.astro';
 import BlogInsights from '../components/BlogInsights.astro';
+import WebMcp from '../components/WebMcp.astro';
 import { schemaFor, SITE_URL, BUSINESS } from '../lib/business';
 import { getFaqs, faqSchema } from '../lib/faqs';
 
@@ -50,6 +51,11 @@ for (const block of extraSchema) jsonld.push(block);
     <meta name="description" content={description} />
     <!-- Bing Webmaster Tools site verification -->
     <meta name="msvalidate.01" content="D7B1A43A1F88DD9D6B52B7C3F0100798" />
+    <!-- WebMCP origin trial (Chrome 149-156, expires 17 Nov 2026). The token is
+         a third-party token, which Chrome only accepts from an external script
+         file — not a meta tag. Injected by /webmcp-trial.js; tools are
+         registered in components/WebMcp.astro. -->
+    <script src="/webmcp-trial.js" is:inline></script>
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
@@ -110,6 +116,8 @@ for (const block of extraSchema) jsonld.push(block);
         else setTimeout(init, 200);
       })();
     </script>
+
+    <WebMcp />
   </body>
 </html>
 

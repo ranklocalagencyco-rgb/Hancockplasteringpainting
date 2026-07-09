@@ -1,0 +1,157 @@
+---
+// WebMCP: exposes this site's capabilities to AI agents as callable tools.
+// Origin trial token lives in Layout.astro's <head>.
+// API: document.modelContext.registerTool() — navigator.modelContext is
+// deprecated as of Chrome 150, so we feature-detect both.
+import { BUSINESS, SERVICES, AREAS, SITE_URL } from '../lib/business';
+
+const services = Object.entries(SERVICES).map(([slug, name]) => ({
+  name,
+  url: `${SITE_URL}/services/${slug}`,
+}));
+
+const areas = Object.entries(AREAS).map(([slug, name]) => ({
+  name,
+  url: `${SITE_URL}/areas/${slug}`,
+}));
+
+const business = {
+  name: BUSINESS.name,
+  phone: BUSINESS.phoneDisplay,
+  email: BUSINESS.email,
+  address: `${BUSINESS.street}, ${BUSINESS.locality}, ${BUSINESS.region} ${BUSINESS.postalCode}`,
+  website: SITE_URL,
+  quoteUrl: `${SITE_URL}/contact`,
+  credentials: 'City & Guilds certified. 4 plasterers and painters, 60+ years combined experience. No subcontractors.',
+  pricing: 'Fixed-price quotes agreed before work starts.',
+  cancellationPolicy: 'Cancellations made less than 48 hours before a booking incur a £100 cancellation fee.',
+  reviews: BUSINESS.sameAs[0],
+};
+---
+
+<script is:inline define:vars={{ services, areas, business }}>
+  (function () {
+    const ctx =
+      (typeof document !== 'undefined' && document.modelContext) ||
+      (typeof navigator !== 'undefined' && navigator.modelContext);
+    if (!ctx || typeof ctx.registerTool !== 'function') return;
+
+    const readOnly = { readOnlyHint: true };
+    const noInput = { type: 'object', properties: {} };
+
+    async function register() {
+      await ctx.registerTool({
+        name: 'get_business_info',
+        description:
+          'Get contact details, address, qualifications, pricing approach and cancellation policy for Hancock Plastering & Painting Services.',
+        inputSchema: noInput,
+        annotations: readOnly,
+        execute: async () => JSON.stringify(business),
+      });
+
+      await ctx.registerTool({
+        name: 'list_services',
+        description:
+          'List every plastering, painting and decorating service offered, each with a link to its page.',
+        inputSchema: noInput,
+        annotations: readOnly,
+        execute: async () => JSON.stringify(services),
+      });
+
+      await ctx.registerTool({
+        name: 'list_service_areas',
+        description:
+          'List every town and area covered across Middlesex and the Home Counties, each with a link to its page.',
+        inputSchema: noInput,
+        annotations: readOnly,
+        execute: async () => JSON.stringify(areas),
+      });
+
+      await ctx.registerTool({
+        name: 'check_service_area',
+        description:
+          'Check whether Hancock Plastering & Painting Services covers a given town or area.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            area: { type: 'string', description: 'A town or area name, e.g. "Ruislip"' },
+          },
+          required: ['area'],
+        },
+        annotations: readOnly,
+        execute: async ({ area }) => {
+          const q = String(area || '').trim().toLowerCase();
+          if (!q) return 'Please provide a town or area name.';
+          const hit =
+            areas.find((a) => a.name.toLowerCase() === q) ||
+            areas.find((a) => a.name.toLowerCase().includes(q) || q.includes(a.name.toLowerCase()));
+          return hit
+            ? `Yes — ${hit.name} is covered. More detail: ${hit.url}`
+            : `"${area}" is not among the ${areas.length} listed areas. Call ${business.phone} to ask — nearby work is often still possible.`;
+        },
+      });
+
+      // Only on the contact page: pre-fill the enquiry form. Deliberately does
+      // NOT submit — a person reviews and presses Send, so an agent can't fire
+      // off enquiries on its own.
+      const form = document.getElementById('contact-form');
+      if (!form) return;
+
+      await ctx.registerTool({
+        name: 'fill_quote_request',
+        description:
+          'Fill in the free-quote enquiry form on the contact page. Does not submit it — the person reviews the details and presses "Send Enquiry".',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            name: { type: 'string', description: 'Full name' },
+            phone: { type: 'string', description: 'Contact phone number' },
+            email: { type: 'string', description: 'Email address' },
+            service: {
+              type: 'string',
+              description: 'Service required, e.g. "Rendering". Must be one of the offered services.',
+            },
+            location: { type: 'string', description: 'Town or postcode, e.g. "Ruislip HA4"' },
+            message: { type: 'string', description: 'Description of the job' },
+          },
+          required: ['name', 'phone', 'email'],
+        },
+        annotations: { readOnlyHint: false },
+        execute: async (args) => {
+          const fire = (el) => {
+            el.dispatchEvent(new Event('input', { bubbles: true }));
+            el.dispatchEvent(new Event('change', { bubbles: true }));
+          };
+          const setField = (selector, value) => {
+            if (!value) return;
+            const el = form.querySelector(selector);
+            if (!el) return;
+            el.value = value;
+            fire(el);
+          };
+
+          setField('[name="name"]', args.name);
+          setField('[name="phone"]', args.phone);
+          setField('[name="email"]', args.email);
+          setField('[name="location"]', args.location);
+          setField('[name="message"]', args.message);
+
+          if (args.service) {
+            const select = form.querySelector('[name="service"]');
+            const wanted = String(args.service).trim().toLowerCase();
+            const option = select && [...select.options].find((o) => o.text.toLowerCase() === wanted);
+            if (option) {
+              select.value = option.value || option.text;
+              fire(select);
+            }
+          }
+
+          form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return 'Quote form filled in. Review the details on the page, then press "Send Enquiry" to submit.';
+        },
+      });
+    }
+
+    register().catch(() => {});
+  })();
+</script>
