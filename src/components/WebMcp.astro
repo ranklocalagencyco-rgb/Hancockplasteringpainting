@@ -91,65 +91,8 @@ const business = {
         },
       });
 
-      // Only on the contact page: pre-fill the enquiry form. Deliberately does
-      // NOT submit — a person reviews and presses Send, so an agent can't fire
-      // off enquiries on its own.
-      const form = document.getElementById('contact-form');
-      if (!form) return;
-
-      await ctx.registerTool({
-        name: 'fill_quote_request',
-        description:
-          'Fill in the free-quote enquiry form on the contact page. Does not submit it — the person reviews the details and presses "Send Enquiry".',
-        inputSchema: {
-          type: 'object',
-          properties: {
-            name: { type: 'string', description: 'Full name' },
-            phone: { type: 'string', description: 'Contact phone number' },
-            email: { type: 'string', description: 'Email address' },
-            service: {
-              type: 'string',
-              description: 'Service required, e.g. "Rendering". Must be one of the offered services.',
-            },
-            location: { type: 'string', description: 'Town or postcode, e.g. "Ruislip HA4"' },
-            message: { type: 'string', description: 'Description of the job' },
-          },
-          required: ['name', 'phone', 'email'],
-        },
-        annotations: { readOnlyHint: false },
-        execute: async (args) => {
-          const fire = (el) => {
-            el.dispatchEvent(new Event('input', { bubbles: true }));
-            el.dispatchEvent(new Event('change', { bubbles: true }));
-          };
-          const setField = (selector, value) => {
-            if (!value) return;
-            const el = form.querySelector(selector);
-            if (!el) return;
-            el.value = value;
-            fire(el);
-          };
-
-          setField('[name="name"]', args.name);
-          setField('[name="phone"]', args.phone);
-          setField('[name="email"]', args.email);
-          setField('[name="location"]', args.location);
-          setField('[name="message"]', args.message);
-
-          if (args.service) {
-            const select = form.querySelector('[name="service"]');
-            const wanted = String(args.service).trim().toLowerCase();
-            const option = select && [...select.options].find((o) => o.text.toLowerCase() === wanted);
-            if (option) {
-              select.value = option.value || option.text;
-              fire(select);
-            }
-          }
-
-          form.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          return 'Quote form filled in. Review the details on the page, then press "Send Enquiry" to submit.';
-        },
-      });
+      // The quote form is exposed declaratively instead, via the toolname and
+      // tooldescription attributes on the contact form in contact.astro.
     }
 
     register().catch(() => {});
