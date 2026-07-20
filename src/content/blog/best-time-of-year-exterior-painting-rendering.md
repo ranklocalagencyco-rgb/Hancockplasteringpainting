@@ -11,7 +11,7 @@ Exterior work lives and dies by the weather. Render and masonry paint both need 
 
 ## The sweet spot: late spring to early autumn
 
-In the UK, the best window for [exterior painting](/services/exterior-painting) and [rendering](/services/rendering) runs from roughly **April to September**. You're after:
+In the UK, the best window for [exterior painting](/services/exterior-painting/) and [rendering](/services/rendering/) runs from roughly **April to September**. You're after:
 
 - Daytime temperatures **above 8–10°C** (and ideally not above the high 20s)
 - **Dry weather** for several days before and after — surfaces must be dry going on, and the coating needs time to cure before rain
@@ -35,4 +35,4 @@ Because the season is limited, the warmer months are the busiest for exterior wo
 
 We plan exterior jobs around the weather to give your home the best, longest-lasting finish — whether that's fresh render, masonry paint, or repainting fascias and woodwork. Based in Harefield, covering Middlesex and the Home Counties.
 
-[Get a free quote](/contact) or call **07734 903439** to get on the books.
+[Get a free quote](/contact/) or call **07734 903439** to get on the books.

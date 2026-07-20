@@ -8,6 +8,10 @@ export default defineConfig({
   // Production domain — used for canonical URLs, sitemap, and absolute links.
   // Update this to the real domain before launch.
   site: 'https://hancockplasteringpainting.co.uk',
+  // The site is served with trailing slashes (build.format: 'directory').
+  // Declaring it makes the dev server enforce the same form as production, so
+  // canonical/og:url built from Astro.url.pathname can't drift between them.
+  trailingSlash: 'always',
   integrations: [sitemap()],
   vite: {
     build: {

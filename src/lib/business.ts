@@ -69,6 +69,16 @@ export const AREAS: Record<string, string> = {
 
 const abs = (p: string) => SITE_URL + p;
 
+/**
+ * Normalise a pathname to the form this site actually serves: with a trailing
+ * slash. Use for anything Google reads as a URL (canonical, og:url, JSON-LD
+ * `url`/`item`). Not for fragment IDs (`/#business`) or asset paths.
+ */
+export const canonicalPath = (p: string) => (p.endsWith('/') ? p : p + '/');
+
+/** Absolute, canonical (trailing-slash) URL for a page path. */
+const pageUrl = (p: string) => SITE_URL + canonicalPath(p);
+
 function postalAddress() {
   return {
     '@type': 'PostalAddress',
@@ -91,7 +101,7 @@ export function localBusiness(extra: Record<string, unknown> = {}) {
     '@type': 'GeneralContractor',
     '@id': abs('/#business'),
     name: BUSINESS.name,
-    url: SITE_URL,
+    url: pageUrl('/'),
     telephone: BUSINESS.phone,
     email: BUSINESS.email,
     image: BUSINESS.logo,
@@ -107,7 +117,7 @@ function providerRef() {
   return {
     '@type': 'GeneralContractor',
     name: BUSINESS.name,
-    url: SITE_URL,
+    url: pageUrl('/'),
     telephone: BUSINESS.phone,
     address: postalAddress(),
   };
@@ -121,7 +131,7 @@ function breadcrumb(items: { name: string; path: string }[]) {
       '@type': 'ListItem',
       position: i + 1,
       name: it.name,
-      item: abs(it.path),
+      item: pageUrl(it.path),
     })),
   };
 }
@@ -141,7 +151,7 @@ export function schemaFor(pathname: string, title: string, description: string) 
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       '@id': abs('/#website'),
-      url: SITE_URL,
+      url: pageUrl('/'),
       name: BUSINESS.name,
       publisher: { '@id': abs('/#business') },
     });
@@ -157,7 +167,7 @@ export function schemaFor(pathname: string, title: string, description: string) 
       '@type': 'CollectionPage',
       name: title,
       description,
-      url: abs(path),
+      url: pageUrl(path),
       isPartOf: { '@id': abs('/#website') },
     });
     out.push(
@@ -175,7 +185,7 @@ export function schemaFor(pathname: string, title: string, description: string) 
       '@type': 'Blog',
       name: title,
       description,
-      url: abs(path),
+      url: pageUrl(path),
       publisher: { '@id': abs('/#business') },
     });
     out.push(
@@ -194,7 +204,7 @@ export function schemaFor(pathname: string, title: string, description: string) 
       '@type': isAbout ? 'AboutPage' : 'ContactPage',
       name: title,
       description,
-      url: abs(path),
+      url: pageUrl(path),
       about: { '@id': abs('/#business') },
     });
     out.push(
@@ -215,7 +225,7 @@ export function schemaFor(pathname: string, title: string, description: string) 
       name: `${name} | ${BUSINESS.name}`,
       serviceType: name,
       description,
-      url: abs(path),
+      url: pageUrl(path),
       provider: providerRef(),
       areaServed: areaServedAll(),
     });
@@ -238,7 +248,7 @@ export function schemaFor(pathname: string, title: string, description: string) 
       name: `Plastering & Painting in ${name}`,
       serviceType: 'Plastering and Painting',
       description,
-      url: abs(path),
+      url: pageUrl(path),
       provider: providerRef(),
       areaServed: { '@type': 'City', name },
     });

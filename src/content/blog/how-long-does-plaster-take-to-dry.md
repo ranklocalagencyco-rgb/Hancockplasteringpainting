@@ -29,6 +29,6 @@ It's tempting to crank up the heating or point a fan heater at the wall, but dry
 
 ## Let us handle the whole job
 
-When we [plaster](/services/plastering) or [skim](/services/skimming) a room, we tell you exactly when the walls will be ready and can come back to handle the [interior painting](/services/interior-painting) too — so the finish is done properly, start to finish.
+When we [plaster](/services/plastering/) or [skim](/services/skimming/) a room, we tell you exactly when the walls will be ready and can come back to handle the [interior painting](/services/interior-painting/) too — so the finish is done properly, start to finish.
 
-Based in Harefield and covering Middlesex and the Home Counties, we work to fixed-price quotes agreed before we start. [Get a free quote](/contact) or call **07734 903439**.
+Based in Harefield and covering Middlesex and the Home Counties, we work to fixed-price quotes agreed before we start. [Get a free quote](/contact/) or call **07734 903439**.

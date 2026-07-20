@@ -31,8 +31,8 @@ Persistent **algae, moss or green staining** suggests the surface is holding wat
 
 ## Repair or replace?
 
-Not every problem means a full re-render. Isolated damage can often be [patch-repaired and blended](/services/plaster-refurbishment); widespread failure is better fixed with fresh [render](/services/rendering) across the elevation. The key is dealing with it before water does more damage.
+Not every problem means a full re-render. Isolated damage can often be [patch-repaired and blended](/services/plaster-refurbishment/); widespread failure is better fixed with fresh [render](/services/rendering/) across the elevation. The key is dealing with it before water does more damage.
 
 We'll assess it honestly and quote a fixed price for whichever your walls actually need. Based in Harefield, covering Middlesex and the Home Counties.
 
-[Get a free quote](/contact) or call **07734 903439**.
+[Get a free quote](/contact/) or call **07734 903439**.

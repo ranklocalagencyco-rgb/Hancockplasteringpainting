@@ -7,12 +7,12 @@ import { BUSINESS, SERVICES, AREAS, SITE_URL } from '../lib/business';
 
 const services = Object.entries(SERVICES).map(([slug, name]) => ({
   name,
-  url: `${SITE_URL}/services/${slug}`,
+  url: `${SITE_URL}/services/${slug}/`,
 }));
 
 const areas = Object.entries(AREAS).map(([slug, name]) => ({
   name,
-  url: `${SITE_URL}/areas/${slug}`,
+  url: `${SITE_URL}/areas/${slug}/`,
 }));
 
 const business = {
@@ -20,8 +20,8 @@ const business = {
   phone: BUSINESS.phoneDisplay,
   email: BUSINESS.email,
   address: `${BUSINESS.street}, ${BUSINESS.locality}, ${BUSINESS.region} ${BUSINESS.postalCode}`,
-  website: SITE_URL,
-  quoteUrl: `${SITE_URL}/contact`,
+  website: `${SITE_URL}/`,
+  quoteUrl: `${SITE_URL}/contact/`,
   credentials: 'City & Guilds certified. 4 plasterers and painters, 60+ years combined experience. No subcontractors.',
   pricing: 'Fixed-price quotes agreed before work starts.',
   cancellationPolicy: 'Cancellations made less than 48 hours before a booking incur a £100 cancellation fee.',

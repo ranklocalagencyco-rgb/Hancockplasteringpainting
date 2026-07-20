@@ -25,11 +25,18 @@ import Faq from '../components/Faq.astro';
 import GallerySnippet from '../components/GallerySnippet.astro';
 import BlogInsights from '../components/BlogInsights.astro';
 import WebMcp from '../components/WebMcp.astro';
-import { schemaFor, SITE_URL, BUSINESS } from '../lib/business';
+import { schemaFor, canonicalPath, SITE_URL, BUSINESS } from '../lib/business';
 import { getFaqs, faqSchema } from '../lib/faqs';
 
+// Internal matching key only (schema lookup, FAQ lookup, isDetailPage test).
+// Never emit this — it has no trailing slash and is not a real URL.
 const path = Astro.url.pathname !== '/' ? Astro.url.pathname.replace(/\/$/, '') : '/';
-const canonical = SITE_URL + (path === '/' ? '' : path);
+// Canonical is SELF-REFERENTIAL: it must be the page's own URL exactly as
+// served, which on this site is always the trailing-slash form. Stripping the
+// slash here previously pointed every canonical at a URL Google then preferred
+// over the real one, de-indexing the served pages as "Alternate page with
+// proper canonical tag". Do not strip trailing slashes in this path.
+const canonical = SITE_URL + canonicalPath(Astro.url.pathname);
 // Dedicated 1200x630 social share image (Open Graph / Twitter).
 const ogImage = SITE_URL + '/og-image.png';
 const jsonld = schemaFor(Astro.url.pathname, title, description);
