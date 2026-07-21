@@ -2,21 +2,17 @@
 import Layout from '../layouts/Layout.astro';
 import BlogInsights from '../components/BlogInsights.astro';
 import Cta from '../components/Cta.astro';
-import { readdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { galleryImages } from '../data/gallery';
 
-// Reads every image in /public/gallery at build time — drop new photos in that
-// folder and they appear here automatically (no code changes needed).
-const galleryDir = join(process.cwd(), 'public', 'gallery');
-let files: string[] = [];
-try {
-  files = readdirSync(galleryDir)
-    .filter((f) => /\.(webp|jpe?g|png|avif)$/i.test(f))
-    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
-} catch {
-  files = [];
-}
-const images = files.map((f) => '/gallery/' + encodeURIComponent(f));
+// Curated, labelled list lives in src/data/gallery.ts — each image carries its
+// own descriptive alt text (see that file to add or reorder photos).
+const items = galleryImages.map((g) => ({
+  src: '/gallery/' + encodeURIComponent(g.file),
+  alt: g.alt,
+  caption: g.caption,
+}));
+// Passed to the lightbox script below (needs src + caption per slide).
+const images = items.map((i) => ({ src: i.src, caption: i.caption }));
 ---
 
 <Layout
@@ -45,19 +41,20 @@ const images = files.map((f) => '/gallery/' + encodeURIComponent(f));
       </div>
     ) : (
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;">
-        {images.map((src, i) => (
+        {items.map((item, i) => (
           <button
             class="gallery-thumb"
             data-index={i}
             style="position:relative;border:none;padding:0;margin:0;cursor:pointer;border-radius:8px;overflow:hidden;aspect-ratio:4/3;background:#F1F5F9;display:block;"
           >
             <img
-              src={src}
-              alt={`Hancock plastering and painting — recent work ${i + 1}`}
-              title={`Hancock plastering and painting — recent work ${i + 1}`}
+              src={item.src}
+              alt={item.alt}
+              title={item.alt}
               loading="lazy"
               style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;"
             />
+            <span class="thumb-caption">{item.caption}</span>
           </button>
         ))}
       </div>
@@ -72,12 +69,44 @@ const images = files.map((f) => '/gallery/' + encodeURIComponent(f));
 <div id="lightbox" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(15,23,42,0.94);align-items:center;justify-content:center;">
   <button id="lb-close" aria-label="Close" style="position:absolute;top:20px;right:24px;background:none;border:none;color:#ffffff;font-size:34px;line-height:1;cursor:pointer;">×</button>
   <button id="lb-prev" aria-label="Previous" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.1);border:none;color:#ffffff;font-size:28px;width:48px;height:48px;border-radius:50%;cursor:pointer;">‹</button>
-  <img id="lb-img" src="" alt="Hancock plastering and painting work — enlarged view" title="Hancock plastering and painting work — enlarged view" style="max-width:90vw;max-height:85vh;object-fit:contain;border-radius:6px;box-shadow:0 10px 40px rgba(0,0,0,0.5);" />
+  <img id="lb-img" src="" alt="Hancock plastering and painting work — enlarged view" title="Hancock plastering and painting work — enlarged view" style="max-width:90vw;max-height:82vh;object-fit:contain;border-radius:6px;box-shadow:0 10px 40px rgba(0,0,0,0.5);" />
+  <p id="lb-caption" style="position:absolute;bottom:22px;left:0;right:0;text-align:center;margin:0;padding:0 60px;font-family:'Lexend',sans-serif;font-size:15px;font-weight:500;color:rgba(255,255,255,0.92);letter-spacing:-0.01em;"></p>
   <button id="lb-next" aria-label="Next" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.1);border:none;color:#ffffff;font-size:28px;width:48px;height:48px;border-radius:50%;cursor:pointer;">›</button>
 </div>
 
 <style>
   .gallery-thumb:hover img { transform: scale(1.05); }
+  /* Caption bar: hidden by default, slides up on hover. On touch devices
+     (no hover) it stays visible so the label is never unreachable. */
+  .thumb-caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 22px 14px 12px;
+    font-family: 'Lexend', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #ffffff;
+    text-align: left;
+    letter-spacing: -0.01em;
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.88) 0%, rgba(15, 23, 42, 0) 100%);
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+  }
+  .gallery-thumb:hover .thumb-caption,
+  .gallery-thumb:focus-visible .thumb-caption {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (hover: none) {
+    .thumb-caption {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 </style>
 
 <script is:inline define:vars={{ images }}>
@@ -85,11 +114,17 @@ const images = files.map((f) => '/gallery/' + encodeURIComponent(f));
     if (!images || images.length === 0) return;
     const lb = document.getElementById('lightbox');
     const lbImg = document.getElementById('lb-img');
+    const lbCaption = document.getElementById('lb-caption');
     let current = 0;
 
+    function render() {
+      lbImg.src = images[current].src;
+      lbImg.alt = images[current].caption;
+      lbCaption.textContent = images[current].caption;
+    }
     function open(i) {
       current = i;
-      lbImg.src = images[current];
+      render();
       lb.style.display = 'flex';
       document.body.style.overflow = 'hidden';
     }
@@ -99,7 +134,7 @@ const images = files.map((f) => '/gallery/' + encodeURIComponent(f));
     }
     function show(delta) {
       current = (current + delta + images.length) % images.length;
-      lbImg.src = images[current];
+      render();
     }
 
     document.querySelectorAll('.gallery-thumb').forEach((btn) => {
