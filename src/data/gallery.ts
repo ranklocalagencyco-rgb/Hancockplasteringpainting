@@ -19,7 +19,7 @@ export interface GalleryImage {
 export const galleryImages: GalleryImage[] = [
   { file: 'gallery-01.webp', alt: 'Hancock decorator cutting in fresh white paint along the cornice of a finished living room', caption: 'Painting a finished living room' },
   { file: 'gallery-02.webp', alt: 'Freshly skimmed feature wall around an exposed oak beam in a period cottage', caption: 'Feature wall around an oak beam' },
-  { file: 'gallery-03.webp', alt: 'Hancock plasterer skimming a smooth finish onto an interior wall', caption: 'Skimming a wall smooth' },
+  { file: 'gallery-03.webp', alt: 'Hancock plasterer skimming a wall around a newly installed steel beam', caption: 'Plastering around a steel beam' },
   { file: 'gallery-04.webp', alt: 'Newly plastered ceiling with restored decorative cornice and column detailing', caption: 'Restored decorative cornice' },
   { file: 'gallery-05.webp', alt: 'Smoothly skimmed ceiling and wall with a neat plastered window reveal', caption: 'Smooth ceiling & window reveal' },
   { file: 'gallery-06.webp', alt: 'Freshly skimmed ceiling and wall beside fitted bedroom wardrobes', caption: 'Skimmed ceiling & wall' },
@@ -39,4 +39,11 @@ export const galleryImages: GalleryImage[] = [
   { file: 'gallery-20.webp', alt: 'Freshly plastered chimney breast around a cast-iron fireplace with a newly skimmed ceiling', caption: 'Plastered chimney breast' },
   { file: 'gallery-21.webp', alt: 'Freshly plastered walls and vaulted ceiling in an open-plan home renovation', caption: 'Open-plan home renovation' },
   { file: 'gallery-22.webp', alt: 'Smoothly skimmed conservatory wall with a clean, even finish', caption: 'Smooth conservatory wall' },
+  { file: 'gallery-23.webp', alt: 'Hancock plasterer smoothing the join between a freshly skimmed wall and ceiling', caption: 'Smoothing a wall-to-ceiling join' },
+  { file: 'gallery-24.webp', alt: 'Garage conversion wall freshly plasterboarded and skimmed ready for decoration', caption: 'Plasterboarded & skimmed garage' },
+  { file: 'gallery-25.webp', alt: 'Freshly skimmed wall in a large open-plan room during renovation', caption: 'Large room being plastered' },
+  { file: 'gallery-26.webp', alt: 'Freshly plastered room with a smooth skim finish and a plasterer working through the doorway', caption: 'Room mid-plaster' },
+  { file: 'gallery-27.webp', alt: 'Freshly skimmed wall during a full room refurbishment', caption: 'Freshly skimmed wall' },
+  { file: 'gallery-28.webp', alt: 'Freshly skimmed alcove with a smooth, even plaster finish', caption: 'Freshly skimmed alcove' },
+  { file: 'gallery-29.webp', alt: 'Repaired and re-skimmed kitchen ceiling above fitted oak units', caption: 'Kitchen ceiling repair' },
 ];
