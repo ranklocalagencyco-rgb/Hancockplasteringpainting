@@ -31,6 +31,10 @@ const business = {
 
 <script is:inline define:vars={{ services, areas, business }}>
   (function () {
+    // The origin-trial token is injected by the now-deferred /webmcp-trial.js,
+    // which runs before DOMContentLoaded. Wait for that so document.modelContext
+    // is enabled by the time we register (registering earlier would no-op).
+    function boot() {
     const ctx =
       (typeof document !== 'undefined' && document.modelContext) ||
       (typeof navigator !== 'undefined' && navigator.modelContext);
@@ -96,5 +100,12 @@ const business = {
     }
 
     register().catch(() => {});
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', boot);
+    } else {
+      boot();
+    }
   })();
 </script>

@@ -68,7 +68,7 @@ for (const block of extraSchema) jsonld.push(block);
          a third-party token, which Chrome only accepts from an external script
          file — not a meta tag. Injected by /webmcp-trial.js; tools are
          registered in components/WebMcp.astro. -->
-    <script src="/webmcp-trial.js" is:inline></script>
+    <script src="/webmcp-trial.js" defer is:inline></script>
     <link rel="canonical" href={canonical} />
     {/* Preload the LCP image early at high priority. CSS background images
         aren't discoverable until the stylesheet is parsed, so without this the
@@ -163,6 +163,27 @@ for (const block of extraSchema) jsonld.push(block);
     src: url('/fonts/lexend-latin-wght-normal.woff2') format('woff2-variations');
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
   }
+  /* Metric-matched fallbacks: local Arial scaled (size-adjust + ascent/descent
+     overrides) to occupy the exact same space as Inter/Lexend. The browser uses
+     these while the web fonts load, so the swap-in reflows nothing — this is
+     what fixes the hero Cumulative Layout Shift that failed Agentic Browsing.
+     Overrides are computed from the actual font files (xAvgCharWidth + hhea). */
+  @font-face {
+    font-family: 'Inter Fallback';
+    src: local('Arial'), local('Liberation Sans'), local('Arimo');
+    size-adjust: 138.27%;
+    ascent-override: 70.06%;
+    descent-override: 17.44%;
+    line-gap-override: 0%;
+  }
+  @font-face {
+    font-family: 'Lexend Fallback';
+    src: local('Arial'), local('Liberation Sans'), local('Arimo');
+    size-adjust: 133.21%;
+    ascent-override: 75.07%;
+    descent-override: 18.77%;
+    line-gap-override: 0%;
+  }
   :root {
     color-scheme: only light;
   }
@@ -173,10 +194,16 @@ for (const block of extraSchema) jsonld.push(block);
   }
   body {
     margin: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', 'Inter Fallback', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  /* Pages set font-family inline (~500 places), which can't be edited per-file
+     and out-specifies any normal rule. Mirror the responsive layer's
+     attribute-selector + !important pattern to slot the metric-matched fallback
+     into every inline Inter/Lexend declaration, so no element is left shifting. */
+  [style*="'Inter'"] { font-family: 'Inter', 'Inter Fallback', sans-serif !important; }
+  [style*="'Lexend'"] { font-family: 'Lexend', 'Lexend Fallback', sans-serif !important; }
   /* Media never overflows its container on small screens */
   img,
   svg,
