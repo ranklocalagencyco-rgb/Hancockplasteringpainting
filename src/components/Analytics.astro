@@ -17,7 +17,9 @@
 //
 // Mark whatsapp_click, call_click and generate_lead as key events in GA4.
 // gtag.js is injected after window load so it never competes with the LCP
-// image or fonts; clicks before that are queued in dataLayer, nothing is lost.
+// image or fonts. Events fired before it arrives are held in a pending queue
+// and replayed on its onload, because gtag.js does not replay dataLayer
+// pushes made before it existed.
 // Only loads on the production hostname and only if GA4_MEASUREMENT_ID is set.
 import { GA4_MEASUREMENT_ID, SITE_URL } from '../lib/business';
 import { pageContext } from '../lib/page-context';
@@ -48,19 +50,39 @@ const prodHost = new URL(SITE_URL).hostname;
       allow_ad_personalization_signals: false,
     });
 
+    // gtag.js is fetched late (after window load) so it never competes with the
+    // LCP image. Anything that happens before it arrives has to be held back and
+    // replayed: events pushed to dataLayer before the library exists are NOT
+    // picked up by it. That includes generate_lead on the thank-you page, which
+    // fires the instant the page parses.
+    var ready = !enabled; // nothing to wait for when analytics is switched off
+    var pending = [];
+
+    function flush() {
+      if (ready) return;
+      ready = true;
+      for (var i = 0; i < pending.length; i++) {
+        gtag('event', pending[i][0], pending[i][1]);
+      }
+      pending = [];
+    }
+
+    function ev(name, params) {
+      if (ready) gtag('event', name, params || {});
+      else pending.push([name, params || {}]);
+    }
+
     if (enabled) {
       var load = function () {
         var s = document.createElement('script');
         s.async = true;
         s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
+        s.onload = flush;
+        s.onerror = flush; // blocked by an ad blocker: drain the queue, lose nothing loudly
         document.head.appendChild(s);
       };
       if (document.readyState === 'complete') load();
       else window.addEventListener('load', load, { once: true });
-    }
-
-    function ev(name, params) {
-      gtag('event', name, params || {});
     }
 
     // --- where on the page a link lives ---------------------------------
