@@ -5,6 +5,12 @@
 // IMPORTANT: set this to the real production domain before launch.
 export const SITE_URL = 'https://hancockplasteringpainting.co.uk';
 
+// Google Analytics 4 measurement ID (Admin > Data streams > Web > "G-XXXXXXXXXX").
+// Leave empty to disable: events still queue in window.dataLayer but gtag.js
+// is never loaded. Analytics also only loads on the production hostname, so
+// localhost and Vercel previews never pollute the reports.
+export const GA4_MEASUREMENT_ID = '';
+
 export const BUSINESS = {
   name: 'Hancock Plastering & Painting Services',
   phone: '+447734903439',

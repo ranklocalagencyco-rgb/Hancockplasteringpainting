@@ -5,7 +5,8 @@
 // that names the page the visitor was on (area, service, blog article, or a
 // general page), so the enquiry arrives already tagged with its source.
 // Pure HTML/CSS: no script, out of flow (no CLS), one small inline SVG.
-import { AREAS, SERVICES, BUSINESS } from '../lib/business';
+import { BUSINESS } from '../lib/business';
+import { pageContext } from '../lib/page-context';
 
 interface Props {
   /** The page <title> passed to Layout; used to name blog articles. */
@@ -13,36 +14,29 @@ interface Props {
 }
 const { pageTitle = '' } = Astro.props;
 
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
-const [, section = '', slug = ''] = path.split('/');
+const page = pageContext(Astro.url.pathname, pageTitle);
+const { source } = page;
+
+const GENERAL: Record<string, string> = {
+  home: "I'm on your website and I'd like a quote.",
+  services_index: "I'm looking at your services page and I'd like a quote.",
+  areas_index: "I'm looking at your areas page and I'd like to check you cover my address and get a quote.",
+  gallery: "I've been looking at your gallery and I'd like a quote.",
+  about: "I'm on your about page and I'd like a quote.",
+  contact: "I'm on your contact page and I'd like a quote.",
+  blog_index: "I'm on your blog and I'd like some advice on a job.",
+  thank_you: "I've just sent an enquiry through your website and wanted to add a message.",
+};
 
 let context: string;
-let source: string;
-if (section === 'areas' && slug && AREAS[slug]) {
-  context = `I'm looking at your ${AREAS[slug]} page and I'd like a quote for a job in ${AREAS[slug]}.`;
-  source = `area:${slug}`;
-} else if (section === 'services' && slug && SERVICES[slug]) {
-  context = `I'm looking at your ${SERVICES[slug]} page and I'd like a quote.`;
-  source = `service:${slug}`;
-} else if (section === 'blog' && slug) {
-  const article = pageTitle.replace(/\s*\|.*$/, '').trim();
-  context = article
-    ? `I've just read your article "${article}" and I'd like some advice on a job.`
-    : `I've just read one of your articles and I'd like some advice on a job.`;
-  source = `blog:${slug}`;
+if (page.type === 'area') {
+  context = `I'm looking at your ${page.name} page and I'd like a quote for a job in ${page.name}.`;
+} else if (page.type === 'service') {
+  context = `I'm looking at your ${page.name} page and I'd like a quote.`;
+} else if (page.type === 'blog') {
+  context = `I've just read your article "${page.name}" and I'd like some advice on a job.`;
 } else {
-  const general: Record<string, string> = {
-    '/': "I'm on your website and I'd like a quote.",
-    '/services': "I'm looking at your services page and I'd like a quote.",
-    '/areas': "I'm looking at your areas page and I'd like to check you cover my address and get a quote.",
-    '/gallery': "I've been looking at your gallery and I'd like a quote.",
-    '/about': "I'm on your about page and I'd like a quote.",
-    '/contact': "I'm on your contact page and I'd like a quote.",
-    '/blog': "I'm on your blog and I'd like some advice on a job.",
-    '/thank-you': "I've just sent an enquiry through your website and wanted to add a message.",
-  };
-  context = general[path] ?? "I'm on your website and I'd like a quote.";
-  source = `page:${path === '/' ? 'home' : path.slice(1)}`;
+  context = GENERAL[page.type] ?? "I'm on your website and I'd like a quote.";
 }
 
 const message = `Hi Hancock, ${context}`;

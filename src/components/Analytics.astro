@@ -1,0 +1,147 @@
+---
+// Google Analytics 4 + conversion event tracking. Rendered once per page by
+// Layout, at the end of <body>.
+//
+// What it sends (all events carry content_group = page type and page_name):
+//   page_view        automatic (gtag config), plus GA4 enhanced measurement
+//                    (scroll 90%, outbound clicks) which is on by default
+//   whatsapp_click   sticky WhatsApp button      { link_location, source }
+//   call_click       any tel: link               { link_location, link_text }
+//   email_click      any mailto: link            { link_location }
+//   quote_cta_click  any link to /contact/        { link_location, link_text }
+//   internal_click   other internal links        { link_location, link_url, link_text }
+//   form_start       first interaction with a form { form_id }
+//   form_submit      form submitted               { form_id, service }
+//   generate_lead    /thank-you/ page reached      { form_id }
+//   article_read     blog post scrolled past 75%   { page_name }
+//
+// Mark whatsapp_click, call_click and generate_lead as key events in GA4.
+// gtag.js is injected after window load so it never competes with the LCP
+// image or fonts; clicks before that are queued in dataLayer, nothing is lost.
+// Only loads on the production hostname and only if GA4_MEASUREMENT_ID is set.
+import { GA4_MEASUREMENT_ID, SITE_URL } from '../lib/business';
+import { pageContext } from '../lib/page-context';
+
+interface Props {
+  pageTitle?: string;
+}
+const { pageTitle = '' } = Astro.props;
+const page = pageContext(Astro.url.pathname, pageTitle);
+const prodHost = new URL(SITE_URL).hostname;
+---
+
+<script is:inline define:vars={{ id: GA4_MEASUREMENT_ID, prodHost, pageType: page.type, pageName: page.name }}>
+  (function () {
+    // --- gtag bootstrap (queues until gtag.js arrives) -------------------
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { window.dataLayer.push(arguments); }
+    window.gtag = window.gtag || gtag;
+
+    var host = location.hostname.replace(/^www\./, '');
+    var enabled = !!id && host === prodHost;
+
+    gtag('js', new Date());
+    gtag('config', id || 'G-DISABLED', {
+      content_group: pageType,
+      page_name: pageName,
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false,
+    });
+
+    if (enabled) {
+      var load = function () {
+        var s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(id);
+        document.head.appendChild(s);
+      };
+      if (document.readyState === 'complete') load();
+      else window.addEventListener('load', load, { once: true });
+    }
+
+    function ev(name, params) {
+      gtag('event', name, params || {});
+    }
+
+    // --- where on the page a link lives ---------------------------------
+    function locationOf(el) {
+      if (el.classList && el.classList.contains('wa-btn')) return 'sticky_whatsapp';
+      if (el.closest('header')) return 'nav';
+      if (el.closest('footer')) return 'footer';
+      var form = el.closest('form');
+      if (form) return 'form_' + (form.id || 'unnamed');
+      var sec = el.closest('[data-section]');
+      if (sec) return sec.getAttribute('data-section');
+      var main = document.querySelector('main');
+      var section = el.closest('main > section, main > article');
+      if (main && section && section === main.firstElementChild) return 'hero';
+      return 'content';
+    }
+
+    // --- click tracking (capture phase, one listener) --------------------
+    document.addEventListener('click', function (e) {
+      var t = e.target;
+      var a = t && t.closest ? t.closest('a[href]') : null;
+      if (!a) return;
+      var href = a.getAttribute('href') || '';
+      var loc = locationOf(a);
+      var text = (a.getAttribute('aria-label') || a.textContent || '').replace(/[←-⇿›»]/g, '').replace(/\s+/g, ' ').trim().slice(0, 80);
+
+      if (a.classList.contains('wa-btn') || /wa\.me|api\.whatsapp\.com/.test(href)) {
+        ev('whatsapp_click', { link_location: loc, source: a.getAttribute('data-source') || '' });
+      } else if (href.indexOf('tel:') === 0) {
+        ev('call_click', { link_location: loc, link_text: text });
+      } else if (href.indexOf('mailto:') === 0) {
+        ev('email_click', { link_location: loc });
+      } else if (/^\/contact\/?(#.*)?$/.test(href)) {
+        ev('quote_cta_click', { link_location: loc, link_text: text });
+      } else if (href.charAt(0) === '/' && href.indexOf('/uploads/') !== 0) {
+        ev('internal_click', { link_location: loc, link_url: href, link_text: text });
+      }
+      // External links are covered by GA4 enhanced measurement (click / outbound).
+    }, true);
+
+    // --- forms -----------------------------------------------------------
+    var started = {};
+    document.addEventListener('focusin', function (e) {
+      var form = e.target && e.target.closest ? e.target.closest('form') : null;
+      if (!form) return;
+      var fid = form.id || 'unnamed';
+      if (started[fid]) return;
+      started[fid] = true;
+      ev('form_start', { form_id: fid });
+    }, true);
+
+    document.addEventListener('submit', function (e) {
+      var form = e.target;
+      if (!form || form.tagName !== 'FORM') return;
+      var fid = form.id || 'unnamed';
+      var service = form.elements && form.elements['service'] ? String(form.elements['service'].value || '').slice(0, 60) : '';
+      ev('form_submit', { form_id: fid, service: service });
+      try { sessionStorage.setItem('hp_lead_form', fid); } catch (_) {}
+    }, true);
+
+    // --- lead: the FormSubmit redirect lands here ------------------------
+    if (pageType === 'thank_you') {
+      var fid = '';
+      try { fid = sessionStorage.getItem('hp_lead_form') || ''; sessionStorage.removeItem('hp_lead_form'); } catch (_) {}
+      ev('generate_lead', { form_id: fid || 'unknown' });
+    }
+
+    // --- blog: did they actually read it? -------------------------------
+    if (pageType === 'blog') {
+      var fired = false;
+      var onScroll = function () {
+        if (fired) return;
+        var doc = document.documentElement;
+        var max = doc.scrollHeight - window.innerHeight;
+        if (max > 0 && (window.scrollY || doc.scrollTop) / max >= 0.75) {
+          fired = true;
+          window.removeEventListener('scroll', onScroll);
+          ev('article_read', { page_name: pageName });
+        }
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
+  })();
+</script>
