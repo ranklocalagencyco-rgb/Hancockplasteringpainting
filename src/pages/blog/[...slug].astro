@@ -1,5 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Cta from '../../components/Cta.astro';
+import GallerySnippet from '../../components/GallerySnippet.astro';
 import { getCollection, render } from 'astro:content';
 import { SITE_URL, BUSINESS } from '../../lib/business';
 
@@ -75,6 +77,13 @@ const breadcrumbSchema = {
     <a href="/contact/" style="display:inline-flex;align-items:center;background:#0C7BA8;color:#ffffff;font-size:15px;font-weight:600;padding:13px 26px;border-radius:6px;text-decoration:none;letter-spacing:-0.02em;">Get a Free Quote</a>
   </div>
 </section>
+
+<!-- Closing CTA + gallery teaser on every post (same order as /blog/: navy CTA, then a light section before the navy footer). -->
+<Cta
+  heading="Need this doing properly?"
+  text="Tell us about the job and get a fixed price agreed before work starts. We cover Middlesex and the Home Counties, and Oliver usually replies within 24 hours."
+/>
+<GallerySnippet />
 
 <style>
   .prose :global(h2) {
