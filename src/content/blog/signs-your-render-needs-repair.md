@@ -3,7 +3,7 @@ title: "5 Signs Your Render Needs Repairing or Replacing"
 description: "Cracks, hollow patches, staining and damp can all mean your render is failing. Here are five warning signs to watch for, and what to do about them."
 pubDate: 2026-06-18
 author: "Hancock Plastering & Painting"
-heroImage: "/uploads/Hancock-plastering-and-painting (15).webp"
+heroImage: "hancock-branded-van"
 tags: ["rendering", "plaster-refurbishment", "advice"]
 ---
 

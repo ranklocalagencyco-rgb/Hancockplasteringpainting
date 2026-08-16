@@ -3,7 +3,7 @@ title: "Skim Coat or Full Re-Plaster: Which Does Your Wall Need?"
 description: "Not sure whether your walls need a quick skim or a full re-plaster? Here's how to tell the difference and what each job involves, from Hancock Plastering & Painting."
 pubDate: 2026-05-28
 author: "Hancock Plastering & Painting"
-heroImage: "/uploads/Hancock-plastering-and-painting (8).webp"
+heroImage: "hancock-plasterer-steel-trowel"
 tags: ["plastering", "skimming", "advice"]
 ---
 

@@ -3,7 +3,7 @@ title: "How Long Does Plaster Take to Dry Before Painting?"
 description: "How long to wait before painting fresh plaster, how to tell when it's ready, and why rushing it ruins the finish, explained by Hancock Plastering & Painting."
 pubDate: 2026-05-12
 author: "Hancock Plastering & Painting"
-heroImage: "/uploads/Hancock-plastering-and-painting (5).webp"
+heroImage: "ornate-plaster-cornice"
 tags: ["plastering", "painting", "advice"]
 ---
 

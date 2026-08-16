@@ -2,7 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import ServicesGrid from '../components/ServicesGrid.astro';
 import QuoteForm from '../components/QuoteForm.astro';
+import BgImage from '../components/BgImage.astro';
 import { getCollection } from 'astro:content';
+import { imgAttrs, type ImageName } from '../data/images';
 
 const latestPosts = (await getCollection('blog'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -13,14 +15,14 @@ const fmtDate = (d: Date) =>
 
 ---
 
-<Layout title='Plastering & Painting, Middlesex & Home Counties | Hancock' description='Plastering & painting contractors across Middlesex & the Home Counties. Fixed-price quotes, City & Guilds certified.' activePage='home' preloadImage='/uploads/hero-home.avif' preloadImageType='image/avif'>
+<Layout title='Plastering & Painting, Middlesex & Home Counties | Hancock' description='Plastering & painting contractors across Middlesex & the Home Counties. Fixed-price quotes, City & Guilds certified.' activePage='home'>
 <!-- HERO -->
 {/* min-height (not height) so the hero can grow when the quote form stacks
     under the copy on phones/tablets instead of overflowing. */}
 <section style="position:relative;min-height:100vh;display:flex;align-items:center;">
-  {/* LCP element. AVIF first (smaller); the plain url() above it is the
-      fallback for browsers that can't parse image-set(). */}
-  <div style="position:absolute;top:0;left:0;right:0;bottom:0;background-image:url('/uploads/Hancock-plastering-and-painting%20(12).webp');background-image:image-set(url('/uploads/hero-home.avif') type('image/avif'), url('/uploads/Hancock-plastering-and-painting%20(12).webp') type('image/webp'));background-size:cover;background-position:center 35%;"></div>
+  {/* LCP element: a real <img> (AVIF + WebP srcset) so the preload scanner
+      finds it immediately and each device downloads a right-sized file. */}
+  <BgImage name="white-rendered-house-exterior" position="center 35%" eager />
   <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to top,rgba(15,23,42,0.92) 0%,rgba(15,23,42,0.66) 45%,rgba(15,23,42,0.46) 100%);"></div>
   <div style="position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:64px 24px 72px;width:100%;box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;gap:40px 56px;">
     <!-- Copy -->
@@ -118,22 +120,22 @@ const fmtDate = (d: Date) =>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
       <div style="aspect-ratio:4/3;overflow:hidden;border-radius:4px;">
-        <img src="/uploads/Hancock-plastering-and-painting%20(1).webp" alt="Immaculate white interior with exposed dark roof trusses, plastering by Hancock" title="Immaculate white interior with exposed dark roof trusses, plastering by Hancock" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" style-hover="transform:scale(1.04);" loading="lazy">
+        <img src="/uploads/plastered-interior-roof-trusses-960.webp" srcset="/uploads/plastered-interior-roof-trusses-640.webp 640w, /uploads/plastered-interior-roof-trusses-960.webp 960w, /uploads/plastered-interior-roof-trusses-1280.webp 1280w, /uploads/plastered-interior-roof-trusses-1920.webp 1920w" sizes="(max-width:600px) 50vw, (max-width:1328px) 33vw, 420px" alt="Immaculate white interior with exposed dark roof trusses, plastering by Hancock" title="Immaculate white interior with exposed dark roof trusses, plastering by Hancock" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" style-hover="transform:scale(1.04);" loading="lazy">
       </div>
       <div style="aspect-ratio:4/3;overflow:hidden;border-radius:4px;">
-        <img src="/uploads/Hancock-plastering-and-painting%20(5).webp" alt="Ornate white plaster cornice and ceiling detail, Hancock plaster refurbishment" title="Ornate white plaster cornice and ceiling detail, Hancock plaster refurbishment" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" style-hover="transform:scale(1.04);" loading="lazy">
+        <img src="/uploads/ornate-plaster-cornice-960.webp" srcset="/uploads/ornate-plaster-cornice-640.webp 640w, /uploads/ornate-plaster-cornice-960.webp 960w, /uploads/ornate-plaster-cornice-1280.webp 1280w, /uploads/ornate-plaster-cornice-1920.webp 1920w" sizes="(max-width:600px) 50vw, (max-width:1328px) 33vw, 420px" alt="Ornate white plaster cornice and ceiling detail, Hancock plaster refurbishment" title="Ornate white plaster cornice and ceiling detail, Hancock plaster refurbishment" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" style-hover="transform:scale(1.04);" loading="lazy">
       </div>
       <div style="aspect-ratio:4/3;overflow:hidden;border-radius:4px;">
-        <img src="/uploads/Hancock-plastering-and-painting%20(4).webp" alt="Metallic Venetian plaster wall finish with built-in shelf lighting" title="Metallic Venetian plaster wall finish with built-in shelf lighting" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" style-hover="transform:scale(1.04);" loading="lazy">
+        <img src="/uploads/venetian-plaster-shelf-lighting-960.webp" srcset="/uploads/venetian-plaster-shelf-lighting-640.webp 640w, /uploads/venetian-plaster-shelf-lighting-960.webp 960w, /uploads/venetian-plaster-shelf-lighting-1280.webp 1280w, /uploads/venetian-plaster-shelf-lighting-1920.webp 1920w" sizes="(max-width:600px) 50vw, (max-width:1328px) 33vw, 420px" alt="Metallic Venetian plaster wall finish with built-in shelf lighting" title="Metallic Venetian plaster wall finish with built-in shelf lighting" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" style-hover="transform:scale(1.04);" loading="lazy">
       </div>
       <div style="aspect-ratio:4/3;overflow:hidden;border-radius:4px;">
-        <img src="/uploads/Hancock-plastering-and-painting%20(13).webp" alt="Hancock plasterer in branded polo shirt applying skim plaster to a wall" title="Hancock plasterer in branded polo shirt applying skim plaster to a wall" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" style-hover="transform:scale(1.04);" loading="lazy">
+        <img src="/uploads/hancock-plasterer-skim-coat-960.webp" srcset="/uploads/hancock-plasterer-skim-coat-640.webp 640w, /uploads/hancock-plasterer-skim-coat-960.webp 960w, /uploads/hancock-plasterer-skim-coat-1280.webp 1280w, /uploads/hancock-plasterer-skim-coat-1920.webp 1920w" sizes="(max-width:600px) 50vw, (max-width:1328px) 33vw, 420px" alt="Hancock plasterer in branded polo shirt applying skim plaster to a wall" title="Hancock plasterer in branded polo shirt applying skim plaster to a wall" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" style-hover="transform:scale(1.04);" loading="lazy">
       </div>
       <div style="aspect-ratio:4/3;overflow:hidden;border-radius:4px;">
-        <img src="/uploads/Hancock-plastering-and-painting%20(9).webp" alt="Careful sash window painting on a period property, detail of brush on frame" title="Careful sash window painting on a period property, detail of brush on frame" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" style-hover="transform:scale(1.04);" loading="lazy">
+        <img src="/uploads/sash-window-painting-detail-960.webp" srcset="/uploads/sash-window-painting-detail-640.webp 640w, /uploads/sash-window-painting-detail-960.webp 960w, /uploads/sash-window-painting-detail-1280.webp 1280w, /uploads/sash-window-painting-detail-1920.webp 1920w" sizes="(max-width:600px) 50vw, (max-width:1328px) 33vw, 420px" alt="Careful sash window painting on a period property, detail of brush on frame" title="Careful sash window painting on a period property, detail of brush on frame" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" style-hover="transform:scale(1.04);" loading="lazy">
       </div>
       <div style="aspect-ratio:4/3;overflow:hidden;border-radius:4px;">
-        <img src="/uploads/Hancock-plastering-and-painting%20(14).webp" alt="Applying scratch coat render to an external wall, Hancock rendering service" title="Applying scratch coat render to an external wall, Hancock rendering service" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" style-hover="transform:scale(1.04);" loading="lazy">
+        <img src="/uploads/scratch-coat-render-float-960.webp" srcset="/uploads/scratch-coat-render-float-640.webp 640w, /uploads/scratch-coat-render-float-960.webp 960w, /uploads/scratch-coat-render-float-1280.webp 1280w, /uploads/scratch-coat-render-float-1920.webp 1920w" sizes="(max-width:600px) 50vw, (max-width:1328px) 33vw, 420px" alt="Applying scratch coat render to an external wall, Hancock rendering service" title="Applying scratch coat render to an external wall, Hancock rendering service" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s ease;" style-hover="transform:scale(1.04);" loading="lazy">
       </div>
     </div>
   </div>
@@ -166,7 +168,7 @@ const fmtDate = (d: Date) =>
         <a href="/about/" style="display:inline-flex;align-items:center;margin-top:40px;font-size:15px;font-weight:600;color:#0F172A;text-decoration:none;gap:6px;">Meet the team <span style="color:#0C7BA8;">→</span></a>
       </div>
       <div style="width:420px;flex-shrink:0;max-width:100%;aspect-ratio:3/4;overflow:hidden;border-radius:4px;">
-        <img src="/uploads/Hancock-plastering-and-painting%20(13).webp" alt="Hancock plasterer in branded white polo shirt applying a skim coat finish" title="Hancock plasterer in branded white polo shirt applying a skim coat finish" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <img src="/uploads/hancock-plasterer-skim-coat-960.webp" srcset="/uploads/hancock-plasterer-skim-coat-640.webp 640w, /uploads/hancock-plasterer-skim-coat-960.webp 960w, /uploads/hancock-plasterer-skim-coat-1280.webp 1280w, /uploads/hancock-plasterer-skim-coat-1920.webp 1920w" sizes="(max-width:468px) 100vw, 420px" alt="Hancock plasterer in branded white polo shirt applying a skim coat finish" title="Hancock plasterer in branded white polo shirt applying a skim coat finish" style="width:100%;height:100%;object-fit:cover;display:block;">
       </div>
     </div>
   </div>
@@ -239,7 +241,7 @@ const fmtDate = (d: Date) =>
           <a href={`/blog/${post.id}/`} style="display:flex;flex-direction:column;background:#ffffff;border:1px solid #E2E8F0;border-radius:10px;overflow:hidden;text-decoration:none;" style-hover="box-shadow:0 8px 28px rgba(0,0,0,0.08);border-color:#D0E7F5;">
             {post.data.heroImage && (
               <div style="aspect-ratio:16/9;background:#F1F5F9;overflow:hidden;">
-                <img src={post.data.heroImage} alt={post.data.title} title={post.data.title} loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+                <img {...imgAttrs(post.data.heroImage as ImageName, 960)} sizes="(max-width:660px) 100vw, (max-width:1000px) 50vw, 410px" alt={post.data.title} title={post.data.title} loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
               </div>
             )}
             <div style="padding:24px;display:flex;flex-direction:column;flex:1;">

@@ -3,7 +3,7 @@ title: "The Best Time of Year to Paint or Render Your Home's Exterior"
 description: "Weather makes or breaks exterior work. Here's the best time of year to render or paint the outside of your home in the UK, and why timing matters."
 pubDate: 2026-06-09
 author: "Hancock Plastering & Painting"
-heroImage: "/uploads/Hancock-plastering-and-painting (13).webp"
+heroImage: "hancock-plasterer-skim-coat"
 tags: ["rendering", "exterior-painting", "advice"]
 ---
 

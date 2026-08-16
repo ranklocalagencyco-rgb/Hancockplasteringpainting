@@ -1,0 +1,40 @@
+---
+// Full-bleed responsive background photo for heroes and banners.
+//
+// Replaces the old inline `background-image:url(...)` divs. A real <img> with
+// srcset/sizes lets the browser fetch a file that matches the viewport (640px
+// on a phone, 1920px on a desktop) instead of stretching one small file, and
+// object-fit/object-position reproduce background-size:cover exactly.
+// Drop it inside a `position:relative` section, before the gradient overlay.
+import { IMAGES, srcsetFor, type ImageName } from '../data/images';
+
+interface Props {
+  name: ImageName;
+  /** CSS object-position. Defaults to the image's `focus` (keeps any logo in frame). */
+  position?: string;
+  /** Above-the-fold hero (LCP): eager + high priority. Banners further down stay lazy. */
+  eager?: boolean;
+  alt?: string;
+}
+
+const { name, eager = false, alt } = Astro.props;
+const img = IMAGES[name];
+const position = Astro.props.position ?? ('focus' in img ? img.focus : 'center');
+const altText = alt ?? img.alt;
+const hasAvif = 'avif' in img && img.avif;
+---
+
+<picture style="display:contents;">
+  {hasAvif && <source type="image/avif" srcset={srcsetFor(name, 'avif')} sizes="100vw" />}
+  <img
+    src={`/uploads/${img.file}-1280.webp`}
+    srcset={srcsetFor(name, 'webp')}
+    sizes="100vw"
+    alt={altText}
+    title={altText}
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : undefined}
+    decoding="async"
+    style={`position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:${position};display:block;`}
+  />
+</picture>

@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { imgAttrs, type ImageName } from '../data/images';
 
 const posts = (await getCollection('blog'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -24,7 +25,7 @@ const fmtDate = (d: Date) =>
           <a href={`/blog/${post.id}/`} style="display:flex;flex-direction:column;background:#ffffff;border:1px solid #E2E8F0;border-radius:10px;overflow:hidden;text-decoration:none;" style-hover="box-shadow:0 8px 28px rgba(0,0,0,0.08);border-color:#D0E7F5;">
             {post.data.heroImage && (
               <div style="aspect-ratio:16/9;background:#F1F5F9;overflow:hidden;">
-                <img src={post.data.heroImage} alt={post.data.title} title={post.data.title} loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+                <img {...imgAttrs(post.data.heroImage as ImageName, 960)} sizes="(max-width:660px) 100vw, (max-width:1000px) 50vw, 410px" alt={post.data.title} title={post.data.title} loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
               </div>
             )}
             <div style="padding:22px;display:flex;flex-direction:column;flex:1;">

@@ -4,10 +4,6 @@ export interface Props {
   description?: string;
   activePage?: '' | 'home' | 'services' | 'areas' | 'gallery' | 'blog' | 'about' | 'contact';
   extraSchema?: Record<string, unknown>[];
-  /** LCP image to preload at high priority (e.g. a hero background). */
-  preloadImage?: string;
-  /** MIME type of preloadImage, so browsers that can't decode it skip the preload. */
-  preloadImageType?: string;
   /** Emit <meta name="robots" content="noindex">, for utility pages like /thank-you/. */
   noindex?: boolean;
 }
@@ -17,8 +13,6 @@ const {
   description = 'Plastering & painting contractors across Middlesex & the Home Counties. Fixed-price quotes, City & Guilds certified.',
   activePage = '',
   extraSchema = [],
-  preloadImage,
-  preloadImageType,
   noindex = false,
 } = Astro.props;
 
@@ -74,18 +68,6 @@ for (const block of extraSchema) jsonld.push(block);
          registered in components/WebMcp.astro. -->
     <script src="/webmcp-trial.js" defer is:inline></script>
     <link rel="canonical" href={canonical} />
-    {/* Preload the LCP image early at high priority. CSS background images
-        aren't discoverable until the stylesheet is parsed, so without this the
-        hero starts downloading late. */}
-    {preloadImage && (
-      <link
-        rel="preload"
-        as="image"
-        href={preloadImage}
-        type={preloadImageType}
-        fetchpriority="high"
-      />
-    )}
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />

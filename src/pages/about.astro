@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import BgImage from '../components/BgImage.astro';
 import Cta from '../components/Cta.astro';
 import ServicesSnippet from '../components/ServicesSnippet.astro';
 import AreasSnippet from '../components/AreasSnippet.astro';
@@ -10,7 +11,7 @@ import BlogInsights from '../components/BlogInsights.astro';
 <Layout title='About Us | Hancock Plastering & Painting Services' description='Family-run plastering and painting firm based in Harefield, Middlesex. City & Guilds certified, all work done in-house, no subcontractors.' activePage='about'>
 <!-- HERO -->
 <section style="position:relative;height:460px;display:flex;align-items:flex-end;">
-  <div style="position:absolute;top:0;left:0;right:0;bottom:0;background-image:url('/uploads/Hancock-plastering-and-painting%20(15).webp');background-size:cover;background-position:center 40%;"></div>
+  <BgImage name="hancock-branded-van" position="center 40%" eager />
   <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(to top,rgba(15,23,42,0.9) 0%,rgba(15,23,42,0.45) 55%,rgba(15,23,42,0.15) 100%);"></div>
   <div style="position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 24px 60px;width:100%;box-sizing:border-box;">
     <p style="font-size:12px;color:rgba(255,255,255,0.55);margin:0 0 12px;letter-spacing:-0.01em;"><a href="/" style="color:rgba(255,255,255,0.55);text-decoration:none;">Home</a> / About</p>
@@ -32,10 +33,10 @@ import BlogInsights from '../components/BlogInsights.astro';
     <div style="flex:1;min-width:280px;">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;border-radius:4px;overflow:hidden;margin-bottom:24px;">
         <div style="aspect-ratio:1;overflow:hidden;">
-          <img src="/uploads/Hancock-plastering-and-painting%20(2).webp" alt="Hancock tradesperson holding a steel trowel in branded workwear" title="Hancock tradesperson holding a steel trowel in branded workwear" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <img src="/uploads/hancock-plasterer-steel-trowel-960.webp" srcset="/uploads/hancock-plasterer-steel-trowel-640.webp 640w, /uploads/hancock-plasterer-steel-trowel-960.webp 960w, /uploads/hancock-plasterer-steel-trowel-1280.webp 1280w, /uploads/hancock-plasterer-steel-trowel-1920.webp 1920w" sizes="(max-width:768px) 50vw, 310px" alt="Hancock tradesperson holding a steel trowel in branded workwear" title="Hancock tradesperson holding a steel trowel in branded workwear" style="width:100%;height:100%;object-fit:cover;display:block;">
         </div>
         <div style="aspect-ratio:1;overflow:hidden;">
-          <img src="/uploads/Hancock-plastering-and-painting%20(15).webp" alt="Hancock Plastering branded van parked outside a residential property" title="Hancock Plastering branded van parked outside a residential property" style="width:100%;height:100%;object-fit:cover;display:block;">
+          <img src="/uploads/hancock-branded-van-960.webp" srcset="/uploads/hancock-branded-van-640.webp 640w, /uploads/hancock-branded-van-960.webp 960w, /uploads/hancock-branded-van-1280.webp 1280w, /uploads/hancock-branded-van-1920.webp 1920w" sizes="(max-width:768px) 50vw, 310px" alt="Hancock Plastering branded van parked outside a residential property" title="Hancock Plastering branded van parked outside a residential property" style="width:100%;height:100%;object-fit:cover;display:block;">
         </div>
       </div>
       <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:6px;padding:24px;">
