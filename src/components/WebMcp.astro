@@ -1,7 +1,7 @@
 ---
 // WebMCP: exposes this site's capabilities to AI agents as callable tools.
 // Origin trial token lives in Layout.astro's <head>.
-// API: document.modelContext.registerTool() — navigator.modelContext is
+// API: document.modelContext.registerTool(). navigator.modelContext is
 // deprecated as of Chrome 150, so we feature-detect both.
 import { BUSINESS, SERVICES, AREAS, SITE_URL } from '../lib/business';
 
@@ -90,13 +90,14 @@ const business = {
             areas.find((a) => a.name.toLowerCase() === q) ||
             areas.find((a) => a.name.toLowerCase().includes(q) || q.includes(a.name.toLowerCase()));
           return hit
-            ? `Yes — ${hit.name} is covered. More detail: ${hit.url}`
-            : `"${area}" is not among the ${areas.length} listed areas. Call ${business.phone} to ask — nearby work is often still possible.`;
+            ? `Yes, ${hit.name} is covered. More detail: ${hit.url}`
+            : `"${area}" is not among the ${areas.length} listed areas. Call ${business.phone} to ask, as nearby work is often still possible.`;
         },
       });
 
       // The quote form is exposed declaratively instead, via the toolname and
-      // tooldescription attributes on the contact form in contact.astro.
+      // tooldescription attributes on the forms in contact.astro and
+      // components/QuoteForm.astro (homepage hero).
     }
 
     register().catch(() => {});

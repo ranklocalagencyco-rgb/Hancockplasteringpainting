@@ -1,12 +1,19 @@
 ---
 import Layout from '../layouts/Layout.astro';
-// Web3Forms access key — set PUBLIC_WEB3FORMS_KEY in .env (see .env.example).
-const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+import { BUSINESS, SITE_URL } from '../lib/business';
+
+// The form submits natively (no JS required) to FormSubmit (https://formsubmit.co),
+// which emails every submission to BUSINESS.email (hancockplasteringpainting@gmail.com).
+// No API key. The first-ever submission triggers a one-time activation email to that
+// inbox that must be clicked. The homepage hero form (components/QuoteForm.astro)
+// posts to the same address. After sending, FormSubmit redirects to `_next`.
+const FORM_ACTION = `https://formsubmit.co/${BUSINESS.email}`;
+const THANK_YOU_URL = `${SITE_URL}/thank-you/`;
 ---
 
 <Layout
   title="Get a Free Quote | Hancock Plastering & Painting Services"
-  description="Get a fixed-price quote for plastering or painting across Middlesex and the Home Counties. No obligation — Oliver usually responds within 24 hours."
+  description="Get a fixed-price quote for plastering or painting across Middlesex and the Home Counties. No obligation. Oliver usually responds within 24 hours."
   activePage="contact"
 >
 <!-- HERO -->
@@ -26,15 +33,7 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 
     <!-- FORM -->
     <div style="flex:1.4;min-width:300px;">
-      <div id="contact-success" style="display:none;background:#F0FDF4;border:1px solid #86EFAC;border-radius:8px;padding:40px;text-align:center;">
-        <div style="width:56px;height:56px;background:#15803D;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12L10 17L19 8" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-        </div>
-        <h3 style="font-family:'Lexend',sans-serif;font-size:24px;font-weight:600;color:#0F172A;margin:0 0 12px;letter-spacing:-0.02em;">Enquiry sent.</h3>
-        <p style="font-size:16px;color:#334155;line-height:1.65;margin:0 0 24px;">Thanks for getting in touch. Oliver will be in contact shortly to discuss your project and provide a fixed-price quote.</p>
-        <p style="font-size:14px;color:#64748B;margin:0;">In a hurry? Call directly: <a href="tel:07734903439" style="color:#0C7BA8;text-decoration:none;font-weight:500;">07734 903439</a></p>
-      </div>
-      <div id="contact-form-wrap">
+      <div>
         <h2 style="font-family:'Lexend',sans-serif;font-size:clamp(22px,3vw,30px);font-weight:600;color:#0F172A;margin:0 0 8px;letter-spacing:-0.03em;">Tell us about your project.</h2>
         <p style="font-size:15px;color:#64748B;margin:0 0 32px;line-height:1.6;">Fill in the form and Oliver will come back to you with a fixed-price quote, usually within 24 hours.</p>
         {/* Declarative WebMCP: exposes this form to AI agents as a tool.
@@ -42,15 +41,20 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
             form but the person still presses "Send Enquiry" themselves. */}
         <form
           id="contact-form"
+          action={FORM_ACTION}
+          method="POST"
           toolname="request_quote"
           tooldescription="Request a free fixed-price quote from Hancock Plastering & Painting Services for plastering, painting, rendering or decorating work in Middlesex and the Home Counties."
           style="display:flex;flex-direction:column;gap:20px;"
         >
-          <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
-          <input type="hidden" name="subject" value="New website enquiry — Hancock Plastering & Painting" />
-          <input type="hidden" name="from_name" value="Hancock Plastering Website" />
+          <!-- FormSubmit config (https://formsubmit.co/documentation) -->
+          <input type="hidden" name="_subject" value="New website enquiry (contact page) - Hancock Plastering & Painting" />
+          <input type="hidden" name="_next" value={THANK_YOU_URL} />
+          <input type="hidden" name="_template" value="table" />
+          <!-- Skip FormSubmit's interstitial reCAPTCHA page; the honeypot below still filters bots. -->
+          <input type="hidden" name="_captcha" value="false" />
           <!-- honeypot: bots fill this, humans don't -->
-          <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display:none;" />
+          <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none;" />
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
             <div>
               <label for="cf-name" style="display:block;font-size:13px;font-weight:600;color:#0F172A;margin-bottom:6px;letter-spacing:-0.01em;">Full name *</label>
@@ -91,13 +95,12 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
           </div>
           <div>
             <label for="cf-message" style="display:block;font-size:13px;font-weight:600;color:#0F172A;margin-bottom:6px;letter-spacing:-0.01em;">Tell us about the job</label>
-            <textarea id="cf-message" name="message" rows="5" placeholder="Describe what needs doing — wall condition, room size, any relevant details..." toolparamdescription="A description of the job: wall or surface condition, room size, and any other relevant details." style="width:100%;box-sizing:border-box;padding:11px 14px;border:1px solid #E2E8F0;border-radius:6px;font-size:15px;color:#0F172A;background:#ffffff;outline:none;resize:vertical;line-height:1.6;"></textarea>
+            <textarea id="cf-message" name="message" rows="5" placeholder="Describe what needs doing. Wall condition, room size, any relevant details..." toolparamdescription="A description of the job: wall or surface condition, room size, and any other relevant details." style="width:100%;box-sizing:border-box;padding:11px 14px;border:1px solid #E2E8F0;border-radius:6px;font-size:15px;color:#0F172A;background:#ffffff;outline:none;resize:vertical;line-height:1.6;"></textarea>
           </div>
           <div style="padding:16px;background:#FFF8ED;border:1px solid #FDE68A;border-radius:6px;">
             <p style="font-size:13px;color:#92400E;margin:0;line-height:1.6;">⚠ Please be aware: cancellations made less than 48 hours before your booking incur a £100 cancellation fee.</p>
           </div>
           <button id="contact-submit" type="submit" style="background:#0C7BA8;color:#ffffff;font-size:16px;font-weight:600;padding:15px 28px;border-radius:6px;border:none;cursor:pointer;letter-spacing:-0.02em;text-align:left;display:flex;align-items:center;justify-content:space-between;">Send Enquiry <span style="font-size:20px;">→</span></button>
-          <p id="contact-error" style="display:none;font-size:14px;color:#B91C1C;background:#FEF2F2;border:1px solid #FECACA;border-radius:6px;padding:12px 14px;margin:0;line-height:1.6;"></p>
         </form>
       </div>
     </div>
@@ -113,7 +116,7 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
           <div>
             <p style="font-size:13px;font-weight:600;color:#64748B;margin:0 0 4px;text-transform:uppercase;letter-spacing:0.06em;">Phone</p>
             <a href="tel:07734903439" style="font-size:16px;font-weight:500;color:#0F172A;text-decoration:none;">07734 903439</a>
-            <p style="font-size:13px;color:#64748B;margin:2px 0 0;">Anytime — Oliver answers directly</p>
+            <p style="font-size:13px;color:#64748B;margin:2px 0 0;">Anytime. Oliver answers directly</p>
           </div>
         </div>
         <div style="display:flex;align-items:flex-start;gap:14px;">
@@ -138,7 +141,7 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
       </div>
       <div style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:24px;">
         <h4 style="font-family:'Lexend',sans-serif;font-size:16px;font-weight:600;color:#0F172A;margin:0 0 12px;letter-spacing:-0.02em;">Service area</h4>
-        <p style="font-size:14px;color:#334155;line-height:1.65;margin:0 0 16px;">We cover 27 areas across Middlesex and the Home Counties — from Stanmore and Watford to Bracknell, Farnham, and Ascot.</p>
+        <p style="font-size:14px;color:#334155;line-height:1.65;margin:0 0 16px;">We cover 27 areas across Middlesex and the Home Counties, from Stanmore and Watford to Bracknell, Farnham, and Ascot.</p>
         <a href="/areas/" style="font-size:14px;font-weight:500;color:#0C7BA8;text-decoration:none;">View all areas →</a>
       </div>
     </div>
@@ -149,7 +152,7 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 <section style="padding:0 0 0;background:#ffffff;">
   <div style="max-width:1280px;margin:0 auto;padding:0 24px 96px;">
     <h2 style="font-family:'Lexend',sans-serif;font-size:clamp(22px,3vw,30px);font-weight:600;color:#0F172A;margin:0 0 8px;letter-spacing:-0.03em;">Where we're based</h2>
-    <p style="font-size:15px;color:#64748B;margin:0 0 24px;line-height:1.6;">3 Anderson Close, Harefield, Middlesex UB9 6HF — covering Middlesex and the Home Counties.</p>
+    <p style="font-size:15px;color:#64748B;margin:0 0 24px;line-height:1.6;">3 Anderson Close, Harefield, Middlesex UB9 6HF, covering Middlesex and the Home Counties.</p>
     <div style="border-radius:12px;overflow:hidden;border:1px solid #E2E8F0;line-height:0;">
       <iframe
         title="Map showing Hancock Plastering & Painting Services in Harefield, Middlesex"
@@ -166,56 +169,17 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
 </section>
 
 <script is:inline>
+  // Progressive enhancement only: show "Sending…" and block double-clicks
+  // while the browser performs the native POST + redirect.
   (function () {
-    const form = document.getElementById('contact-form');
-    const wrap = document.getElementById('contact-form-wrap');
-    const success = document.getElementById('contact-success');
-    const errorBox = document.getElementById('contact-error');
-    const btn = document.getElementById('contact-submit');
-    if (!form) return;
-
-    function showError(msg) {
-      errorBox.textContent = msg;
-      errorBox.style.display = 'block';
-    }
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      errorBox.style.display = 'none';
-
-      const data = new FormData(form);
-      if (!data.get('access_key')) {
-        showError('The contact form is not set up yet. Please call 07734 903439 or email hancockplasteringpainting@gmail.com directly.');
-        return;
-      }
-
-      const originalText = btn.innerHTML;
+    var form = document.getElementById('contact-form');
+    var btn = document.getElementById('contact-submit');
+    if (!form || !btn) return;
+    form.addEventListener('submit', function () {
       btn.disabled = true;
       btn.style.opacity = '0.6';
       btn.style.cursor = 'wait';
-      btn.innerHTML = 'Sending…';
-
-      try {
-        const res = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: { Accept: 'application/json' },
-          body: data,
-        });
-        const json = await res.json();
-        if (res.ok && json.success) {
-          wrap.style.display = 'none';
-          success.style.display = 'block';
-          success.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        } else {
-          throw new Error(json.message || 'Submission failed');
-        }
-      } catch (err) {
-        showError('Sorry, something went wrong sending your enquiry. Please call 07734 903439 or email hancockplasteringpainting@gmail.com.');
-        btn.disabled = false;
-        btn.style.opacity = '1';
-        btn.style.cursor = 'pointer';
-        btn.innerHTML = originalText;
-      }
+      btn.textContent = 'Sending…';
     });
   })();
 </script>

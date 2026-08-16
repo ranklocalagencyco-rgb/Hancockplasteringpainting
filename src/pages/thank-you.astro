@@ -1,0 +1,47 @@
+---
+// Post-submit landing page for both contact forms (FormSubmit `_next` redirect).
+// noindex + excluded from the sitemap (astro.config.mjs). It's a utility page.
+import Layout from '../layouts/Layout.astro';
+import { BUSINESS } from '../lib/business';
+---
+
+<Layout
+  title="Thanks, Enquiry Sent | Hancock Plastering & Painting Services"
+  description="Your enquiry has been sent. Oliver will be in touch shortly with a fixed-price quote."
+  noindex={true}
+>
+<section style="padding:88px 24px 96px;background:#F8FAFC;border-bottom:1px solid #E2E8F0;min-height:60vh;display:flex;align-items:center;">
+  <div style="max-width:640px;margin:0 auto;text-align:center;width:100%;">
+    <div style="width:64px;height:64px;background:#15803D;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12L10 17L19 8" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </div>
+    <h1 style="font-family:'Lexend',sans-serif;font-size:clamp(32px,5vw,48px);font-weight:700;color:#0F172A;margin:0 0 16px;letter-spacing:-0.04em;line-height:1.05;">Enquiry sent.</h1>
+    <p style="font-size:17px;color:#334155;line-height:1.65;margin:0 0 12px;">Thanks for getting in touch. Oliver will be in contact shortly to discuss your project and provide a fixed-price quote, usually within 24 hours.</p>
+    <p style="font-size:15px;color:#64748B;margin:0 0 36px;">In a hurry? Call directly: <a href={`tel:${BUSINESS.phone}`} style="color:#0C7BA8;text-decoration:none;font-weight:600;">{BUSINESS.phoneDisplay}</a></p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;text-align:left;margin:0 0 40px;">
+      <div style="background:#ffffff;border:1px solid #E2E8F0;border-radius:8px;padding:18px;">
+        <p style="font-size:12px;font-weight:700;color:#0C7BA8;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 6px;">Step 1</p>
+        <p style="font-size:14px;color:#0F172A;font-weight:600;margin:0 0 4px;">We read your enquiry</p>
+        <p style="font-size:13px;color:#64748B;margin:0;line-height:1.55;">Every message goes straight to Oliver.</p>
+      </div>
+      <div style="background:#ffffff;border:1px solid #E2E8F0;border-radius:8px;padding:18px;">
+        <p style="font-size:12px;font-weight:700;color:#0C7BA8;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 6px;">Step 2</p>
+        <p style="font-size:14px;color:#0F172A;font-weight:600;margin:0 0 4px;">We call or email you back</p>
+        <p style="font-size:13px;color:#64748B;margin:0;line-height:1.55;">Usually within 24 hours, to talk through the job.</p>
+      </div>
+      <div style="background:#ffffff;border:1px solid #E2E8F0;border-radius:8px;padding:18px;">
+        <p style="font-size:12px;font-weight:700;color:#0C7BA8;letter-spacing:0.1em;text-transform:uppercase;margin:0 0 6px;">Step 3</p>
+        <p style="font-size:14px;color:#0F172A;font-weight:600;margin:0 0 4px;">Fixed price, agreed up front</p>
+        <p style="font-size:13px;color:#64748B;margin:0;line-height:1.55;">No surprises. Work starts once you're happy.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a href="/" style="display:inline-flex;align-items:center;background:#0C7BA8;color:#ffffff;font-size:15px;font-weight:600;padding:14px 26px;border-radius:6px;text-decoration:none;letter-spacing:-0.02em;">Back to home</a>
+      <a href="/gallery/" style="display:inline-flex;align-items:center;background:#ffffff;color:#0F172A;font-size:15px;font-weight:500;padding:14px 26px;border-radius:6px;text-decoration:none;border:1px solid #E2E8F0;letter-spacing:-0.02em;">See recent work</a>
+      <a href="/services/" style="display:inline-flex;align-items:center;background:#ffffff;color:#0F172A;font-size:15px;font-weight:500;padding:14px 26px;border-radius:6px;text-decoration:none;border:1px solid #E2E8F0;letter-spacing:-0.02em;">View services</a>
+    </div>
+  </div>
+</section>
+</Layout>

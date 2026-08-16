@@ -12,7 +12,13 @@ export default defineConfig({
   // Declaring it makes the dev server enforce the same form as production, so
   // canonical/og:url built from Astro.url.pathname can't drift between them.
   trailingSlash: 'always',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      // /thank-you/ is the post-submit redirect for the contact forms —
+      // noindex'd in its Layout props and kept out of the sitemap.
+      filter: (page) => !page.includes('/thank-you/'),
+    }),
+  ],
   vite: {
     build: {
       // Target older engines so the CSS minifier keeps the universally

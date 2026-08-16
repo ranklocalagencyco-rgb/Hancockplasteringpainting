@@ -1,0 +1,119 @@
+---
+// Compact quote-request card used in the homepage hero.
+//
+// Submits natively (no JS required) to FormSubmit (https://formsubmit.co),
+// which emails every submission to BUSINESS.email
+// (hancockplasteringpainting@gmail.com). No API key: the first-ever submission
+// triggers a one-time activation email to that inbox that must be clicked.
+// The full form on /contact/ posts to the same address; `_subject` differs so
+// Oliver can tell which form an enquiry came from. After sending, FormSubmit
+// redirects the visitor to `_next` (/thank-you/ on this site).
+import { BUSINESS, SITE_URL } from '../lib/business';
+
+const FORM_ACTION = `https://formsubmit.co/${BUSINESS.email}`;
+const THANK_YOU_URL = `${SITE_URL}/thank-you/`;
+
+// Kept in step with the <select> on contact.astro.
+const SERVICES = [
+  'Plastering',
+  'Skimming',
+  'Rendering',
+  'Pebble Dashing',
+  'Venetian Plastering',
+  'Floating Plaster',
+  'Plaster Refurbishment',
+  'Repair & Insurance Work',
+  'Interior Painting',
+  'Exterior Painting',
+  'Wallpapering',
+  'Sash Window Painting',
+  'Commercial Decorating',
+  'Eco-Friendly Decorating',
+];
+
+const inputStyle =
+  'width:100%;box-sizing:border-box;padding:11px 13px;border:1px solid #CBD5E1;border-radius:6px;font-size:16px;line-height:1.4;color:#0F172A;background:#ffffff;outline:none;';
+const labelStyle =
+  'display:block;font-size:12px;font-weight:600;color:#334155;margin-bottom:5px;letter-spacing:-0.01em;';
+---
+
+<div style="background:#ffffff;border-radius:12px;padding:26px 26px 22px;box-shadow:0 30px 70px rgba(15,23,42,0.45);width:100%;box-sizing:border-box;">
+  <p style="font-size:11px;font-weight:700;color:#0C7BA8;letter-spacing:0.14em;text-transform:uppercase;margin:0 0 8px;">Free, no-obligation quote</p>
+  <h2 style="font-family:'Lexend',sans-serif;font-size:24px;font-weight:600;color:#0F172A;margin:0 0 6px;letter-spacing:-0.03em;line-height:1.15;">Get your fixed price.</h2>
+  <p style="font-size:14px;color:#64748B;margin:0 0 18px;line-height:1.55;">Tell us about the job. Oliver usually replies within 24 hours.</p>
+
+  {/* Declarative WebMCP: exposes this form to AI agents as a tool. No
+      `toolautosubmit`, so an agent can fill it in but a person still sends it. */}
+  <form
+    id="hq-form"
+    action={FORM_ACTION}
+    method="POST"
+    toolname="request_quote"
+    tooldescription="Request a free fixed-price quote from Hancock Plastering & Painting Services for plastering, painting, rendering or decorating work in Middlesex and the Home Counties."
+    style="display:flex;flex-direction:column;gap:12px;"
+  >
+    <!-- FormSubmit config (https://formsubmit.co/documentation) -->
+    <input type="hidden" name="_subject" value="New quote request (homepage) - Hancock Plastering & Painting" />
+    <input type="hidden" name="_next" value={THANK_YOU_URL} />
+    <input type="hidden" name="_template" value="table" />
+    <!-- Skip FormSubmit's interstitial reCAPTCHA page; the honeypot below still filters bots. -->
+    <input type="hidden" name="_captcha" value="false" />
+    <!-- honeypot: bots fill this, humans don't -->
+    <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none;" />
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div>
+        <label for="hq-name" style={labelStyle}>Full name *</label>
+        <input id="hq-name" type="text" name="name" required autocomplete="name" placeholder="Your name" toolparamdescription="The customer's full name." style={inputStyle} />
+      </div>
+      <div>
+        <label for="hq-phone" style={labelStyle}>Phone *</label>
+        <input id="hq-phone" type="tel" name="phone" required autocomplete="tel" placeholder="07700 000000" toolparamdescription="A UK contact phone number for the customer." style={inputStyle} />
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div>
+        <label for="hq-email" style={labelStyle}>Email *</label>
+        <input id="hq-email" type="email" name="email" required autocomplete="email" placeholder="your@email.com" toolparamdescription="The customer's email address, used to send the quote." style={inputStyle} />
+      </div>
+      <div>
+        <label for="hq-location" style={labelStyle}>Postcode / area</label>
+        <input id="hq-location" type="text" name="location" autocomplete="postal-code" placeholder="e.g. Ruislip HA4" toolparamdescription="The town or UK postcode where the work is needed, e.g. 'Ruislip HA4'." style={inputStyle} />
+      </div>
+    </div>
+
+    <div>
+      <label for="hq-service" style={labelStyle}>Service required</label>
+      <select id="hq-service" name="service" toolparamdescription="The plastering, painting or decorating service the customer needs. Must be one of the listed options." style={inputStyle + 'color:#334155;appearance:auto;'}>
+        <option value="">Select a service...</option>
+        {SERVICES.map((s) => <option>{s}</option>)}
+      </select>
+    </div>
+
+    <div>
+      <label for="hq-message" style={labelStyle}>Tell us about the job</label>
+      <textarea id="hq-message" name="message" rows="3" placeholder="Room size, wall condition, anything useful..." toolparamdescription="A description of the job: wall or surface condition, room size, and any other relevant details." style={inputStyle + 'resize:vertical;'}></textarea>
+    </div>
+
+    <button id="hq-submit" type="submit" style="margin-top:4px;background:#0C7BA8;color:#ffffff;font-size:16px;font-weight:600;padding:14px 22px;border-radius:6px;border:none;cursor:pointer;letter-spacing:-0.02em;display:flex;align-items:center;justify-content:space-between;width:100%;">Request My Free Quote <span style="font-size:20px;line-height:1;">→</span></button>
+
+    <p style="font-size:12px;color:#64748B;margin:2px 0 0;line-height:1.5;text-align:center;">No obligation. We never share your details. Prefer to talk? <a href={`tel:${BUSINESS.phone}`} style="color:#0C7BA8;text-decoration:none;font-weight:600;white-space:nowrap;">{BUSINESS.phoneDisplay}</a></p>
+  </form>
+</div>
+
+<script is:inline>
+  // Progressive enhancement only: show "Sending…" and block double-clicks
+  // while the browser performs the native POST + redirect.
+  (function () {
+    var form = document.getElementById('hq-form');
+    var btn = document.getElementById('hq-submit');
+    if (!form || !btn) return;
+    form.addEventListener('submit', function () {
+      btn.disabled = true;
+      btn.style.opacity = '0.6';
+      btn.style.cursor = 'wait';
+      btn.textContent = 'Sending…';
+    });
+  })();
+</script>

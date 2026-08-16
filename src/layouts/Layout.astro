@@ -8,6 +8,8 @@ export interface Props {
   preloadImage?: string;
   /** MIME type of preloadImage, so browsers that can't decode it skip the preload. */
   preloadImageType?: string;
+  /** Emit <meta name="robots" content="noindex">, for utility pages like /thank-you/. */
+  noindex?: boolean;
 }
 
 const {
@@ -17,6 +19,7 @@ const {
   extraSchema = [],
   preloadImage,
   preloadImageType,
+  noindex = false,
 } = Astro.props;
 
 import Nav from '../components/Nav.astro';
@@ -29,7 +32,7 @@ import { schemaFor, canonicalPath, SITE_URL, BUSINESS } from '../lib/business';
 import { getFaqs, faqSchema } from '../lib/faqs';
 
 // Internal matching key only (schema lookup, FAQ lookup, isDetailPage test).
-// Never emit this — it has no trailing slash and is not a real URL.
+// Never emit this. It has no trailing slash and is not a real URL.
 const path = Astro.url.pathname !== '/' ? Astro.url.pathname.replace(/\/$/, '') : '/';
 // Canonical is SELF-REFERENTIAL: it must be the page's own URL exactly as
 // served, which on this site is always the trailing-slash form. Stripping the
@@ -62,11 +65,12 @@ for (const block of extraSchema) jsonld.push(block);
     <meta name="color-scheme" content="only light" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <!-- Bing Webmaster Tools site verification -->
     <meta name="msvalidate.01" content="D7B1A43A1F88DD9D6B52B7C3F0100798" />
     <!-- WebMCP origin trial (Chrome 149-156, expires 17 Nov 2026). The token is
          a third-party token, which Chrome only accepts from an external script
-         file — not a meta tag. Injected by /webmcp-trial.js; tools are
+         file, not a meta tag. Injected by /webmcp-trial.js; tools are
          registered in components/WebMcp.astro. -->
     <script src="/webmcp-trial.js" defer is:inline></script>
     <link rel="canonical" href={canonical} />
@@ -156,7 +160,7 @@ for (const block of extraSchema) jsonld.push(block);
        Lighthouse's throttled 4G), which inflated Speed Index. `optional` uses the
        preloaded font if it lands inside the ~100ms block period (fast connections
        still get Inter on first paint) and otherwise keeps the fallback with no
-       later swap — so visual completeness is reached at LCP, not seconds after. */
+       later swap, so visual completeness is reached at LCP, not seconds after. */
     font-display: optional;
     font-weight: 100 900;
     src: url('/fonts/inter-latin-wght-normal.woff2') format('woff2-variations');
@@ -175,7 +179,7 @@ for (const block of extraSchema) jsonld.push(block);
   }
   /* Metric-matched fallbacks: local Arial scaled (size-adjust + ascent/descent
      overrides) to occupy the exact same space as Inter/Lexend. The browser uses
-     these while the web fonts load, so the swap-in reflows nothing — this is
+     these while the web fonts load, so the swap-in reflows nothing. This is
      what fixes the hero Cumulative Layout Shift that failed Agentic Browsing.
      Overrides are computed from the actual font files (xAvgCharWidth + hhea). */
   @font-face {
