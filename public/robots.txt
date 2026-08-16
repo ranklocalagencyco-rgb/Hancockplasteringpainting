@@ -1,4 +1,4 @@
-# Hancock Plastering & Painting Services — robots.txt
+# Hancock Plastering & Painting Services - robots.txt
 # Strategy: maximum crawl access for all search and AI bots.
 
 User-agent: *

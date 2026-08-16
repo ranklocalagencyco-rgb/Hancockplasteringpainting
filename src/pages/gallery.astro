@@ -4,7 +4,7 @@ import BlogInsights from '../components/BlogInsights.astro';
 import Cta from '../components/Cta.astro';
 import { galleryImages } from '../data/gallery';
 
-// Curated, labelled list lives in src/data/gallery.ts — each image carries its
+// Curated, labelled list lives in src/data/gallery.ts - each image carries its
 // own descriptive alt text (see that file to add or reorder photos).
 const items = galleryImages.map((g) => ({
   src: '/gallery/' + encodeURIComponent(g.file),
@@ -69,7 +69,7 @@ const images = items.map((i) => ({ src: i.src, caption: i.caption }));
 <div id="lightbox" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(15,23,42,0.94);align-items:center;justify-content:center;">
   <button id="lb-close" aria-label="Close" style="position:absolute;top:20px;right:24px;background:none;border:none;color:#ffffff;font-size:34px;line-height:1;cursor:pointer;">×</button>
   <button id="lb-prev" aria-label="Previous" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.1);border:none;color:#ffffff;font-size:28px;width:48px;height:48px;border-radius:50%;cursor:pointer;">‹</button>
-  <img id="lb-img" src="" alt="Hancock plastering and painting work — enlarged view" title="Hancock plastering and painting work — enlarged view" style="max-width:90vw;max-height:82vh;object-fit:contain;border-radius:6px;box-shadow:0 10px 40px rgba(0,0,0,0.5);" />
+  <img id="lb-img" src="" alt="Hancock plastering and painting work - enlarged view" title="Hancock plastering and painting work - enlarged view" style="max-width:90vw;max-height:82vh;object-fit:contain;border-radius:6px;box-shadow:0 10px 40px rgba(0,0,0,0.5);" />
   <p id="lb-caption" style="position:absolute;bottom:22px;left:0;right:0;text-align:center;margin:0;padding:0 60px;font-family:'Lexend',sans-serif;font-size:15px;font-weight:500;color:rgba(255,255,255,0.92);letter-spacing:-0.01em;"></p>
   <button id="lb-next" aria-label="Next" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.1);border:none;color:#ffffff;font-size:28px;width:48px;height:48px;border-radius:50%;cursor:pointer;">›</button>
 </div>

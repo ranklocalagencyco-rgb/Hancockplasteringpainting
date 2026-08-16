@@ -1,16 +1,16 @@
 // Curated gallery images with descriptive, SEO-relevant alt text.
 //
 // Each entry's `alt` is used for both the accessible alt attribute and the
-// image title. Order here is the order shown on the page — the first four also
+// image title. Order here is the order shown on the page - the first four also
 // feed the "Recent projects" teaser (GallerySnippet.astro).
 //
 // To add a photo: drop the optimised .webp in public/gallery/ and add a line
-// here with real alt text. (Files not listed here are ignored — alt text is
+// here with real alt text. (Files not listed here are ignored - alt text is
 // required, so there is no silent fallback to generic numbering.)
 export interface GalleryImage {
   /** File name inside public/gallery/ */
   file: string;
-  /** Long, descriptive alt text — written for search engines and accessibility. */
+  /** Long, descriptive alt text - written for search engines and accessibility. */
   alt: string;
   /** Short, visitor-facing label shown on hover and in the lightbox. */
   caption: string;

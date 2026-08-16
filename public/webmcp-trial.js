@@ -1,7 +1,7 @@
 // WebMCP origin trial token (Chrome 149-156, expires 17 Nov 2026).
 //
 // This token was issued as a THIRD-PARTY token. Chrome ignores third-party
-// tokens supplied via <meta>, an inline script, or an HTTP header — they must
+// tokens supplied via <meta>, an inline script, or an HTTP header - they must
 // be injected by an EXTERNAL script file served from the token's origin.
 // That's why this lives in its own file rather than inline in the layout.
 (function () {

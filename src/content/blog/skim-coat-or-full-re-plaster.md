@@ -11,7 +11,7 @@ When walls look tired, cracked or uneven, the fix is one of two jobs: a **skim c
 
 ## What is skimming?
 
-[Skimming](/services/skimming/) applies a thin finishing layer — usually 2–3mm — over an existing surface that's still sound. It flattens minor imperfections, covers fine cracks and leaves walls smooth and ready to decorate. It's the right choice when the wall underneath is solid and well-attached, just scuffed, patchy or slightly uneven.
+[Skimming](/services/skimming/) applies a thin finishing layer (usually 2–3mm) over an existing surface that's still sound. It flattens minor imperfections, covers fine cracks and leaves walls smooth and ready to decorate. It's the right choice when the wall underneath is solid and well-attached, just scuffed, patchy or slightly uneven.
 
 Common skimming jobs:
 
@@ -25,7 +25,7 @@ A [full re-plaster](/services/plastering/) removes failed plaster back to the br
 
 You probably need re-plastering if:
 
-- Plaster sounds **hollow** when you tap it (it's "blown" — no longer bonded)
+- Plaster sounds **hollow** when you tap it (it's "blown", no longer bonded)
 - There are large, deep or spreading cracks
 - Sections are crumbling, bulging or damp-damaged
 - The wall is significantly out of true

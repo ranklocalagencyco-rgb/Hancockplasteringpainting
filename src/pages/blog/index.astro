@@ -14,7 +14,7 @@ const fmtDate = (d: Date) =>
 
 <Layout
   title="Plastering & Painting Advice | Hancock Blog"
-  description="Practical advice on plastering, rendering, skimming and painting from Hancock Plastering & Painting — serving Middlesex and the Home Counties."
+  description="Practical advice on plastering, rendering, skimming and painting from Hancock Plastering & Painting, serving Middlesex and the Home Counties."
   activePage="blog"
 >
 <!-- HERO -->
@@ -32,7 +32,7 @@ const fmtDate = (d: Date) =>
 <section style="padding:72px 24px 96px;background:#F8FAFC;">
   <div style="max-width:1280px;margin:0 auto;">
     {posts.length === 0 ? (
-      <p style="font-size:16px;color:#64748B;text-align:center;padding:40px 0;">New articles are on the way — check back soon.</p>
+      <p style="font-size:16px;color:#64748B;text-align:center;padding:40px 0;">New articles are on the way. Check back soon.</p>
     ) : (
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;">
         {posts.map((post) => (

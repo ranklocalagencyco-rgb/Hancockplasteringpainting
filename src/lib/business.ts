@@ -1,5 +1,5 @@
 // Central business data + JSON-LD schema generation.
-// NAP (name/address/phone) is the single source of truth — keep byte-identical
+// NAP (name/address/phone) is the single source of truth - keep byte-identical
 // with the Google Business Profile and the visible footer/contact details.
 
 // IMPORTANT: set this to the real production domain before launch.
