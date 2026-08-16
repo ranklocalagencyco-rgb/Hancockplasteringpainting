@@ -22,6 +22,7 @@ import Faq from '../components/Faq.astro';
 import GallerySnippet from '../components/GallerySnippet.astro';
 import BlogInsights from '../components/BlogInsights.astro';
 import WebMcp from '../components/WebMcp.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
 import { schemaFor, canonicalPath, SITE_URL, BUSINESS } from '../lib/business';
 import { getFaqs, faqSchema } from '../lib/faqs';
 
@@ -108,6 +109,7 @@ for (const block of extraSchema) jsonld.push(block);
       {faqs && <Faq heading={faqs.heading} items={faqs.items} />}
     </main>
     <Footer />
+    <WhatsAppButton pageTitle={title} />
 
     <!-- Generic hover handler: replicates Claude Design's style-hover attribute.
          Skipped on touch/non-hover devices (no hover) and deferred to idle so
