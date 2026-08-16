@@ -9,7 +9,7 @@ export const SITE_URL = 'https://hancockplasteringpainting.co.uk';
 // Leave empty to disable: events still queue in window.dataLayer but gtag.js
 // is never loaded. Analytics also only loads on the production hostname, so
 // localhost and Vercel previews never pollute the reports.
-export const GA4_MEASUREMENT_ID = '';
+export const GA4_MEASUREMENT_ID = 'G-HPJS02Y2KJ';
 
 export const BUSINESS = {
   name: 'Hancock Plastering & Painting Services',
